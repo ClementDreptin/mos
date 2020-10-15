@@ -861,7 +861,7 @@ doGiveMenu() {
 			self.spots[13].slots[1].dpad_right = "-1153 -1497 920 141 70";
 			self.spots[13].slots[1].dpad_up = "-1530 479 607 219 70";
 			self.spots[13].slots[1].lb = "-1599 869 444 243 70";
-			self.spots[13].slots[1].rb = "";
+			self.spots[13].slots[1].rb = "-47 -1765 558 100 70";
 			self.spots[13].slots[1].rs = "";
 
 		self.spots[14] = SpawnStruct();
