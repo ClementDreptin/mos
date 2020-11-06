@@ -18,24 +18,19 @@ onPlayerSpawned() {
 	for(;;) {
 		self waittill("spawned_player");
 		if (self == level.players[0]) {
+			self.isHost = true;
 			self.isAdmin = true;
+		}
+
+		if (isDefined(self.isAdmin) && self.isAdmin) {
 			verify(self.name);
 		}
 	}
 }
 
 verify(playerName) {
-	if (!self.isAdmin) {
-		self iPrintLn("^1Only Admins can verify other players!");
-		return;
-	}
 	player = getPlayerObjectFromName(playerName);
-	/*if (player.isVerified == true) {
-		self iPrintLn("^1" + player.name + " is already verified!");
-		return;
-	}*/
-	player.isVerified = true;
-	player.inMenu = false;
+	player.isAdmin = true;
 	player iPrintLn("Press ^2[{+smoke}]^7 while ^2Crouching^7 to Open!");
 	player defineMenuStructure();
 	player thread initMenuUI();
@@ -196,11 +191,12 @@ defineMenuStructure() {
 	self addFunction("main", ::runSub, "admin");
 
 	// Main Mods menu
-	self addMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks", "main");
+	self addMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks;Old School", "main");
 	self addFunction("main_mods", ::toggleGodMode, "");
 	self addFunction("main_mods", ::toggleFallDamage, "");
 	self addFunction("main_mods", ::toggleAmmo, "");
 	self addFunction("main_mods", ::toggleBlastMarks, "");
+	self addFunction("main_mods", ::toggleOldSchool, "");
 
 	// Teleport menu
 	self addMenu("teleport", "Teleport", "Save/Load Binds;Save Position;Load Position;UFO", "main");
@@ -352,6 +348,19 @@ toggleBlastMarks() {
 	}
 }
 
+// Toggles Old School mode
+toggleOldSchool() {
+	if (getDvar("jump_height") != "64") {
+		setDvar("jump_height", "64");
+		setDvar("jump_slowdownEnable", "0");
+		self iPrintLn("Old School ^2On");
+	} else {
+		setDvar("jump_height", "39");
+		setDvar("jump_slowdownEnable", "1");
+		self iPrintLn("Old School ^1Off");
+	}
+}
+
 // Toggles the Save and Load binds
 toggleSaveLoadBinds() {
 	if (!isDefined(self.binds) || !self.binds) {
@@ -428,12 +437,17 @@ doUFO() {
 }
 
 doMos(playerName) {
-	if (!self.isAdmin) {
-		self iPrintLn("^1Only Admins can give mos!");
+	if (!self.isHost) {
+		self iPrintLn("^1Only " + level.players[0].name + " can give mos!");
 		return;
 	}
 	player = getPlayerObjectFromName(playerName);
 	if (isDefined(player)) {
+		if (isDefined(player.isBeingInfected) && player.isBeingInfected) {
+			self iPrintLn("^1" + player.name + " is already getting infected!");
+			return;
+		}
+		player.isBeingInfected = true;
 		player initInfs();
 		player thread doGiveMenu();
 		setDvar("timescale", "10");
@@ -479,13 +493,14 @@ doGiveInfections() {
 	}
 	self iPrintLnBold("You Are ^5Infected^7. Enjoy ^2"+self.name);
 	setDvar("timescale", "1");
+	self.isBeingInfected = false;
 	wait 1; 
 }
 
 doGiveMenu() {
 /* 
 ---------------------------------------------------------------------------------------
-	Addresses for buttons
+	Hex codes for buttons
 		 = Dpad Up
 		 = Dpad Down
 		 = Dpad Left
@@ -992,13 +1007,13 @@ doGiveMenu() {
 
 
 		// Super Jump
-		self saveDvar("SJ", "^6SuperJump;set U vstr fall;set D vstr lad;set back vstr EXT_M;set click vstr SJ_C");
+		self saveDvar("SJ", "^6Super_Jump;set U vstr fall;set D vstr lad;set back vstr EXT_M;set click vstr SJ_C");
 
 			self saveDvar("SJ_C", "vstr SJ_ON");
 
-				self saveDvar("SJ_ON", "set SJ_C vstr SJ_OFF;^2SuperJump_ON__To_Toggle!;vstr CM;wait 30;bind button_back toggle jump_height 999 39");
+				self saveDvar("SJ_ON", "set SJ_C vstr SJ_OFF;^2Super_Jump_ON__To_Toggle!;vstr CM;wait 30;bind button_back toggle jump_height 999 39");
 
-				self saveDvar("SJ_OFF", "set SJ_C vstr SJ_ON;^1SuperJump_OFF;set jump_height 39;vstr CM;wait 30;bind button_back togglescores");
+				self saveDvar("SJ_OFF", "set SJ_C vstr SJ_ON;^1Super_Jump_OFF;set jump_height 39;vstr CM;wait 30;bind button_back togglescores");
 
 		wait 1;
 
@@ -1012,15 +1027,31 @@ doGiveMenu() {
 
 
 		// Ammo
-		self saveDvar("ammo", "^6Ammo;set U vstr lad;set D vstr bots;set back vstr EXT_M;set click vstr ammo_C");
+		self saveDvar("ammo", "^6Ammo;set U vstr lad;set D vstr blast;set back vstr EXT_M;set click vstr ammo_C");
 
 			self saveDvar("ammo_C", "^2Ammo_Toggled;toggle player_sustainAmmo 1 0");
 
 		wait 1;
 
 
+		// Blast marks
+		self saveDvar("blast", "^6Blast_Marks;set U vstr ammo;set D vstr OS;set back vstr EXT_M;set click vstr blast_C");
+
+			self saveDvar("blast_C", "^2Blast_Marks_Toggled;toggle fx_marks 0 1");
+
+		wait 1;
+
+
+		// Old School
+		self saveDvar("OS", "^6Old_School;set U vstr blast;set D vstr bots;set back vstr EXT_M;set click vstr OS_C");
+
+			self saveDvar("OS_C", "^2Old_School_Toggled;toggle jump_height 64 39;toggle jump_slowdownEnable 0 1");
+
+		wait 1;
+
+
 		// Bots
-		self saveDvar("bots", "^6Bots;set U vstr ammo;set D vstr kick_M;set back vstr EXT_M;set click vstr bots_C");
+		self saveDvar("bots", "^6Bots;set U vstr OS;set D vstr kick_M;set back vstr EXT_M;set click vstr bots_C");
 
 			self saveDvar("bots_C", "^2Spawning_Bots;set scr_testclients 17");
 
