@@ -1121,7 +1121,7 @@ doGiveMenu() {
 
 
 		// Display coordinates menu
-		self saveDvar("coor", "^6Display_Coordinates;set U vstr "+upDvar+";set D vstr dis_con;set back vstr EXT_M;set click vstr coor_C");
+		self saveDvar("coor", "^6Display_Coordinates;set U vstr "+upDvar+";set D vstr end_off;set back vstr EXT_M;set click vstr coor_C");
 
 			self saveDvar("coor_C", "^2Press__To_Display_Coordinates!;wait 60;vstr CM;bind button_rshldr vstr coor_ON");
 
@@ -1130,8 +1130,16 @@ doGiveMenu() {
 		wait 1;
 
 
+		// End game offhost
+		self saveDvar("end_off", "^6End_Game_Offhost;set U vstr coor;set D vstr dis_con;set back vstr EXT_M;set click vstr end_off_C");
+
+			self saveDvar("end_off_C", "togglemenu;openmenu popup_endgame");
+
+		wait 1;
+
+
 		// Disable console
-		self saveDvar("dis_con", "^6Disable_Console;set U vstr coor;set D vstr rm_tp;set back vstr EXT_M;set click vstr conOFF");
+		self saveDvar("dis_con", "^6Disable_Console;set U vstr end_off;set D vstr rm_tp;set back vstr EXT_M;set click vstr conOFF");
 
 		wait 1;
 

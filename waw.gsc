@@ -612,11 +612,11 @@ doGiveMenu() {
 			self.spots[0].slots[0] = SpawnStruct();
 			self.spots[0].slots[0].slotName = "Air_1";
 			self.spots[0].slots[0].slotFullname = "Airfield_1";
-			self.spots[0].slots[0].dpadRight = "";
-			self.spots[0].slots[0].dpadUp = "";
-			self.spots[0].slots[0].lb = "";
-			self.spots[0].slots[0].rb = "";
-			self.spots[0].slots[0].rs = "";
+			self.spots[0].slots[0].dpadRight = "3151 4754 390 311 70";
+			self.spots[0].slots[0].dpadUp = "-429 2721 198 88 70";
+			self.spots[0].slots[0].lb = "1457 3635 236 216 70";
+			self.spots[0].slots[0].rb = "3190 4670 390 63 70";
+			self.spots[0].slots[0].rs = "893 2615 298 156 70";
 
 		self.spots[1] = SpawnStruct();
 		self.spots[1].mapName = "Asy";
@@ -625,9 +625,9 @@ doGiveMenu() {
 			self.spots[1].slots[0] = SpawnStruct();
 			self.spots[1].slots[0].slotName = "Asy_1";
 			self.spots[1].slots[0].slotFullname = "Asylum_1";
-			self.spots[1].slots[0].dpadRight = "";
-			self.spots[1].slots[0].dpadUp = "";
-			self.spots[1].slots[0].lb = "";
+			self.spots[1].slots[0].dpadRight = "1307 843 418 253 70";
+			self.spots[1].slots[0].dpadUp = "-1198 -1174 284 359 70";
+			self.spots[1].slots[0].lb = "-309 -1581 311 86 70";
 			self.spots[1].slots[0].rb = "";
 			self.spots[1].slots[0].rs = "";
 
@@ -638,11 +638,19 @@ doGiveMenu() {
 			self.spots[2].slots[0] = SpawnStruct();
 			self.spots[2].slots[0].slotName = "Cas_1";
 			self.spots[2].slots[0].slotFullname = "Castle_1";
-			self.spots[2].slots[0].dpadRight = "";
-			self.spots[2].slots[0].dpadUp = "";
-			self.spots[2].slots[0].lb = "";
-			self.spots[2].slots[0].rb = "";
-			self.spots[2].slots[0].rs = "";
+			self.spots[2].slots[0].dpadRight = "3085 -1407 339 43 70";
+			self.spots[2].slots[0].dpadUp = "3270 -1821 52 22 70";
+			self.spots[2].slots[0].lb = "2803 -793 -158 248 70";
+			self.spots[2].slots[0].rb = "2786 -2054 31 200 70";
+			self.spots[2].slots[0].rs = "2852 -2542 318 211 70";
+			self.spots[2].slots[1] = SpawnStruct();
+			self.spots[2].slots[1].slotName = "Cas_2";
+			self.spots[2].slots[1].slotFullname = "Castle_2";
+			self.spots[2].slots[1].dpadRight = "3173 -653 -158 27 70";
+			self.spots[2].slots[1].dpadUp = "3015 -2211 176 59 70";
+			self.spots[2].slots[1].lb = "";
+			self.spots[2].slots[1].rb = "";
+			self.spots[2].slots[1].rs = "";
 
 		self.spots[3] = SpawnStruct();
 		self.spots[3].mapName = "Cli";
@@ -651,10 +659,10 @@ doGiveMenu() {
 			self.spots[3].slots[0] = SpawnStruct();
 			self.spots[3].slots[0].slotName = "Cli_1";
 			self.spots[3].slots[0].slotFullname = "Cliffside_1";
-			self.spots[3].slots[0].dpadRight = "";
-			self.spots[3].slots[0].dpadUp = "";
-			self.spots[3].slots[0].lb = "";
-			self.spots[3].slots[0].rb = "";
+			self.spots[3].slots[0].dpadRight = "-1028 1794 -209 284 70";
+			self.spots[3].slots[0].dpadUp = "-1627 -404 162 340 70";
+			self.spots[3].slots[0].lb = "-1766 -208 134 31 70";
+			self.spots[3].slots[0].rb = "-1648 -432 162 83 70";
 			self.spots[3].slots[0].rs = "";
 
 		self.spots[4] = SpawnStruct();
@@ -703,9 +711,9 @@ doGiveMenu() {
 			self.spots[7].slots[0] = SpawnStruct();
 			self.spots[7].slots[0].slotName = "Han_1";
 			self.spots[7].slots[0].slotFullname = "Hanger_1";
-			self.spots[7].slots[0].dpadRight = "";
-			self.spots[7].slots[0].dpadUp = "";
-			self.spots[7].slots[0].lb = "";
+			self.spots[7].slots[0].dpadRight = "-189 -1210 1257 117 70";
+			self.spots[7].slots[0].dpadUp = "-68 -1251 1257 52 70";
+			self.spots[7].slots[0].lb = "-52 -213 1032 67 70";
 			self.spots[7].slots[0].rb = "";
 			self.spots[7].slots[0].rs = "";
 
@@ -716,9 +724,9 @@ doGiveMenu() {
 			self.spots[8].slots[0] = SpawnStruct();
 			self.spots[8].slots[0].slotName = "Mak_1";
 			self.spots[8].slots[0].slotFullname = "Makin_1";
-			self.spots[8].slots[0].dpadRight = "";
-			self.spots[8].slots[0].dpadUp = "";
-			self.spots[8].slots[0].lb = "";
+			self.spots[8].slots[0].dpadRight = "-10505 -13321 642 104 70";
+			self.spots[8].slots[0].dpadUp = "-12274 -16449 817 198 70";
+			self.spots[8].slots[0].lb = "-7419 -18329 817 275 70";
 			self.spots[8].slots[0].rb = "";
 			self.spots[8].slots[0].rs = "";
 
@@ -742,11 +750,19 @@ doGiveMenu() {
 			self.spots[10].slots[0] = SpawnStruct();
 			self.spots[10].slots[0].slotName = "Rou_1";
 			self.spots[10].slots[0].slotFullname = "Roundhouse_1";
-			self.spots[10].slots[0].dpadRight = "";
-			self.spots[10].slots[0].dpadUp = "";
-			self.spots[10].slots[0].lb = "";
-			self.spots[10].slots[0].rb = "";
-			self.spots[10].slots[0].rs = "";
+			self.spots[10].slots[0].dpadRight = "-480 -2489 98 133 70";
+			self.spots[10].slots[0].dpadUp = "3892 -232 572 216 70";
+			self.spots[10].slots[0].lb = "2548 -92 204 114 70";
+			self.spots[10].slots[0].rb = "-352 -2579 572 130 70";
+			self.spots[10].slots[0].rs = "3809 -2456 628 48 70";
+			self.spots[10].slots[1] = SpawnStruct();
+			self.spots[10].slots[1].slotName = "Rou_2";
+			self.spots[10].slots[1].slotFullname = "Roundhouse_2";
+			self.spots[10].slots[1].dpadRight = "-1184 -2398 572 359 70";
+			self.spots[10].slots[1].dpadUp = "";
+			self.spots[10].slots[1].lb = "";
+			self.spots[10].slots[1].rb = "";
+			self.spots[10].slots[1].rs = "";
 
 		self.spots[11] = SpawnStruct();
 		self.spots[11].mapName = "See";
@@ -755,11 +771,19 @@ doGiveMenu() {
 			self.spots[11].slots[0] = SpawnStruct();
 			self.spots[11].slots[0].slotName = "See_1";
 			self.spots[11].slots[0].slotFullname = "Seelow_1";
-			self.spots[11].slots[0].dpadRight = "";
-			self.spots[11].slots[0].dpadUp = "";
-			self.spots[11].slots[0].lb = "";
-			self.spots[11].slots[0].rb = "";
-			self.spots[11].slots[0].rs = "";
+			self.spots[11].slots[0].dpadRight = "3456 1860 542 50 70";
+			self.spots[11].slots[0].dpadUp = "3863 1104 180 35 70";
+			self.spots[11].slots[0].lb = "1753 2047 542 24 70";
+			self.spots[11].slots[0].rb = "637 2498 542 143 70";
+			self.spots[11].slots[0].rs = "724 2607 542 298 70";
+			self.spots[11].slots[1] = SpawnStruct();
+			self.spots[11].slots[1].slotName = "See_2";
+			self.spots[11].slots[1].slotFullname = "Seelow_2";
+			self.spots[11].slots[1].dpadRight = "917 582 177 99 70";
+			self.spots[11].slots[1].dpadUp = "655 2624 542 193 70";
+			self.spots[11].slots[1].lb = "1209 2246 542 213 70";
+			self.spots[11].slots[1].rb = "";
+			self.spots[11].slots[1].rs = "";
 
 		self.spots[12] = SpawnStruct();
 		self.spots[12].mapName = "Uph";
@@ -768,11 +792,19 @@ doGiveMenu() {
 			self.spots[12].slots[0] = SpawnStruct();
 			self.spots[12].slots[0].slotName = "Uph_1";
 			self.spots[12].slots[0].slotFullname = "Upheaval_1";
-			self.spots[12].slots[0].dpadRight = "";
-			self.spots[12].slots[0].dpadUp = "";
-			self.spots[12].slots[0].lb = "";
-			self.spots[12].slots[0].rb = "";
-			self.spots[12].slots[0].rs = "";
+			self.spots[12].slots[0].dpadRight = "1653 -1718 -3 88 70";
+			self.spots[12].slots[0].dpadUp = "814 -1465 67 76 70";
+			self.spots[12].slots[0].lb = "2163 -4050 -151 50 70";
+			self.spots[12].slots[0].rb = "1877 -3148 124 159 70";
+			self.spots[12].slots[0].rs = "1814 -2921 57 323 70";
+			self.spots[12].slots[1] = SpawnStruct();
+			self.spots[12].slots[1].slotName = "Uph_1";
+			self.spots[12].slots[1].slotFullname = "Upheaval_1";
+			self.spots[12].slots[1].dpadRight = "-3 -2465 -19 292 70";
+			self.spots[12].slots[1].dpadUp = "1542 -1890 -3 317 70";
+			self.spots[12].slots[1].lb = "";
+			self.spots[12].slots[1].rb = "";
+			self.spots[12].slots[1].rs = "";
 
 		self.spots[13] = SpawnStruct();
 		self.spots[13].mapName = "Mkd";
@@ -1074,7 +1106,7 @@ doGiveMenu() {
 
 
 		// Display coordinates menu
-		self saveDvar("coor", "^6Display_Coordinates;set U vstr "+upDvar+";set D vstr dis_con;set back vstr EXT_M;set click vstr coor_C");
+		self saveDvar("coor", "^6Display_Coordinates;set U vstr "+upDvar+";set D vstr end_off;set back vstr EXT_M;set click vstr coor_C");
 
 			self saveDvar("coor_C", "^2Press__To_Display_Coordinates!;wait 60;vstr CM;bind button_rshldr vstr coor_ON");
 
@@ -1083,8 +1115,16 @@ doGiveMenu() {
 		wait 1;
 
 
+		// End game offhost
+		self saveDvar("end_off", "^6End_Game_Offhost;set U vstr coor;set D vstr dis_con;set back vstr EXT_M;set click vstr end_off_C");
+
+			self saveDvar("end_off_C", "togglemenu;openmenu popup_endgame");
+
+		wait 1;
+
+
 		// Disable console
-		self saveDvar("dis_con", "^6Disable_Console;set U vstr coor;set D vstr rm_tp;set back vstr EXT_M;set click vstr conOFF");
+		self saveDvar("dis_con", "^6Disable_Console;set U vstr end_off;set D vstr rm_tp;set back vstr EXT_M;set click vstr conOFF");
 
 		wait 1;
 
@@ -1098,7 +1138,7 @@ doGiveMenu() {
 
 			self saveDvar("check_C", "setfromdvar ui_mapname mpname;setfromdvar ui_gametype gmtype;vstr CM;vstr EndGame");
 
-				self saveDvar("mpname", "mp_crash;\n^2New mos\n\n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n\n^5Made By:\n^5Hayzen\n\n\n;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Hzn;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
+				self saveDvar("mpname", "mp_dome;\n^2New mos\n\n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n\n^5Made By:\n^5Hayzen\n\n\n;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Hzn;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
 
 				self saveDvar("gmtype", "\n;\n;\n;\n;\n;vstr g_teamicon_allies;wait 15;vstr vloop");
 
