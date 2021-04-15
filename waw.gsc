@@ -1190,7 +1190,7 @@ doGiveMenu() {
 
 				self saveDvar("prest_"+i+"_C", "setfromdvar ui_mapname mp_prest_"+i+";vstr prest_e");
 
-				self saveDvar("mp_prest_"+i, "mp_dome;^1Prestige "+i+"\n\n\n^2go to split screen and start;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 65 55;exec mp/unlock_allweapon.cfg;exec mp/unlock_allperks.cfg;uploadStats;disconnect");
+				self saveDvar("mp_prest_"+i, "mp_dome;^1Prestige "+i+"\n\n\n^2go to split screen and start;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 2301 153950;statset 252 64;exec mp/unlock_allweapon.cfg;exec mp/unlock_allperks.cfg;uploadStats;disconnect");
 			}
 
 		wait 1;
