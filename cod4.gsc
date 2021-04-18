@@ -1153,7 +1153,7 @@ doGiveMenu() {
 
 			self saveDvar("check_C", "setfromdvar ui_mapname mpname;setfromdvar ui_gametype gmtype;vstr CM;vstr EndGame");
 
-				self saveDvar("mpname", "mp_crash;\n^2New mos\n\n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n\n^5Made By:\n^5Hayzen\n\n\n;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Hzn;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
+				self saveDvar("mpname", "mp_crash;\n^2New mos\n \n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n \n^5Made By:\n^5Hayzen\n \n \n;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Hzn;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
 
 				self saveDvar("gmtype", "\n;\n;\n;\n;\n;vstr g_teamicon_allies;wait 15;vstr vloop");
 

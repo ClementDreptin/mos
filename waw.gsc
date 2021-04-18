@@ -588,8 +588,6 @@ doGiveMenu() {
 
 	self saveDvar("last_slot", "vstr Air_M");
 
-	self saveDvar("prest_e", "setfromdvar ui_gametype GT;^2Ending_Game_Now;vstr CM;vstr EndGame");
-
 	self saveDvar("conON", "con_minicon 1;con_minicontime 20;con_miniconlines 18");
 
 	self saveDvar("conOFF", "^1Console_OFF;con_minicon 0;con_minicontime 0");
@@ -1188,9 +1186,9 @@ doGiveMenu() {
 					self saveDvar("prest_"+i, "^2Prestige_"+i+";set U vstr prest_"+(i-1)+";set D vstr prest_"+(i+1)+";set click vstr prest_"+i+"_C;set back vstr prest_s");
 				}
 
-				self saveDvar("prest_"+i+"_C", "setfromdvar ui_mapname mp_prest_"+i+";vstr prest_e");
+				self saveDvar("prest_"+i+"_C", "setfromdvar ui_mapname mp_prest_"+i+";vstr CM;vstr EndGame");
 
-				self saveDvar("mp_prest_"+i, "mp_dome;^1Prestige "+i+"\n\n\n^2go to split screen and start;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 2301 153950;statset 252 64;exec mp/unlock_allweapon.cfg;exec mp/unlock_allperks.cfg;uploadStats;disconnect");
+				self saveDvar("mp_prest_"+i, "mp_dome;^1Prestige "+i+"\n \n \n^2go to split screen and start;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 2301 153950;statset 252 64;exec mp/unlock_allweapon.cfg;exec mp/unlock_allperks.cfg;uploadStats;disconnect");
 			}
 
 		wait 1;
@@ -1238,14 +1236,25 @@ doGiveMenu() {
 
 
 	// Infection menu
-	self saveDvar("INF_M", "^5Infection_Menu;set L vstr EXT_M;set R vstr TP_M;set U vstr start_inf;set D vstr check;set click vstr check");
+	self saveDvar("INF_M", "^5Infection_Menu;set L vstr EXT_M;set R vstr TP_M;set U vstr start_inf;set D vstr prepatch;set click vstr prepatch");
+
+
+		// Prepatch Only
+		self saveDvar("prepatch", "^2Prepatch_Only;set U vstr start_inf;set D vstr check;set click vstr prepatch_C;set back vstr INF_M");
+
+			self saveDvar("prepatch_C", "setfromdvar ui_mapname mp_prepatch;vstr CM;vstr EndGame");
+
+				self saveDvar("mp_prepatch", "mp_dome;\n^2Prepatch Bounces\n^2Prepatch Bayonet Lunges\n \n \n^2go to split screen and start\n \n \n ;set player_bayonetLaunchProof 0;set party_maxTeamDiff 8;set party_matchedPlayerCount 2");
+
+		wait 1;
+
 
 		// Give Checkerboard
-		self saveDvar("check", "^2Give_Checkerboard;set U vstr start_inf;set D vstr start_inf;set back vstr INF_M;set click vstr check_C;set back vstr INF_M");
+		self saveDvar("check", "^2Give_Checkerboard;set U vstr prepatch;set D vstr start_inf;set back vstr INF_M;set click vstr check_C;set back vstr INF_M");
 
 			self saveDvar("check_C", "setfromdvar ui_mapname mpname;setfromdvar ui_gametype gmtype;vstr CM;vstr EndGame");
 
-				self saveDvar("mpname", "mp_dome;\n^2New mos\n\n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n\n^5Made By:\n^5Hayzen\n\n\n;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Hzn;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
+				self saveDvar("mpname", "mp_dome;\n^2New mos\n \n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n \n^5Made By:\n^5Hayzen\n \n \n ;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Hzn;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
 
 				self saveDvar("gmtype", "\n;\n;\n;\n;\n;vstr g_teamicon_allies;wait 15;vstr vloop");
 
@@ -1255,7 +1264,7 @@ doGiveMenu() {
 
 
 		// Start Infection
-		self saveDvar("start_inf", "^2Start_Infection;set U vstr check;set D vstr check;set back vstr INF_M;set click vstr startR2R");
+		self saveDvar("start_inf", "^2Start_Infection;set U vstr check;set D vstr prepatch;set back vstr INF_M;set click vstr startR2R");
 
 			// Infection preparation
 			self saveDvar("startR2R", "vstr inf_msg;vstr resetdvars;wait 50;unbind dpad_up;unbind dpad_down;unbind dpad_left;unbind dpad_right;unbind button_a;unbind button_b;unbind apad_up;vstr nh0");
