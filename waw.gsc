@@ -615,6 +615,22 @@ doGiveMenu() {
 			self.spots[0].slots[0].lb           = "1457 3635 236 216 70";
 			self.spots[0].slots[0].rb           = "3190 4670 390 63 70";
 			self.spots[0].slots[0].rs           = "893 2615 298 156 70";
+			self.spots[0].slots[1] = SpawnStruct();
+			self.spots[0].slots[1].slotName     = "Air_2";
+			self.spots[0].slots[1].slotFullname = "Airfield_2";
+			self.spots[0].slots[1].dpadRight    = "171 1393 185 90 53";
+			self.spots[0].slots[1].dpadUp       = "-20 1742 230 57 66";
+			self.spots[0].slots[1].lb           = "44 2028 189 110 55";
+			self.spots[0].slots[1].rb           = "2525 1130 216 116 52";
+			self.spots[0].slots[1].rs           = "856 2366 568 274 70";
+			self.spots[0].slots[2] = SpawnStruct();
+			self.spots[0].slots[2].slotName     = "Air_3";
+			self.spots[0].slots[2].slotFullname = "Airfield_3";
+			self.spots[0].slots[2].dpadRight    = "2854 5270 390 350 70";
+			self.spots[0].slots[2].dpadUp       = "1595 3957 194 117 69";
+			self.spots[0].slots[2].lb           = "1820 3481 201 339 46";
+			self.spots[0].slots[2].rb           = "1762 1560 203 176 51";
+			self.spots[0].slots[2].rs           = "883 2430 409 100 70";
 
 		self.spots[1] = SpawnStruct();
 		self.spots[1].mapName     = "Asy";
@@ -677,7 +693,7 @@ doGiveMenu() {
 			self.spots[2].slots[4].slotName     = "Cas_5";
 			self.spots[2].slots[4].slotFullname = "Castle_5";
 			self.spots[2].slots[4].dpadRight    = "3016 -2105 174 59 70";
-			self.spots[2].slots[4].dpadUp       = "";
+			self.spots[2].slots[4].dpadUp       = "2840 -2787 318 90 70";
 			self.spots[2].slots[4].lb           = "";
 			self.spots[2].slots[4].rb           = "";
 			self.spots[2].slots[4].rs           = "";
@@ -728,6 +744,14 @@ doGiveMenu() {
 			self.spots[5].slots[0].lb           = "-88 2312 288 307 70";
 			self.spots[5].slots[0].rb           = "-60 1691 525 266 70";
 			self.spots[5].slots[0].rs           = "500 450 476 318 70";
+			self.spots[5].slots[1] = SpawnStruct();
+			self.spots[5].slots[1].slotName     = "Dom_2";
+			self.spots[5].slots[1].slotFullname = "Dome_2";
+			self.spots[5].slots[1].dpadRight    = "-664 2524 431 105 45";
+			self.spots[5].slots[1].dpadUp       = "737 3119 477 277 48";
+			self.spots[5].slots[1].lb           = "89 351 832 231 70";
+			self.spots[5].slots[1].rb           = "-840 2436 -673 77 40";
+			self.spots[5].slots[1].rs           = "979 1628 530 97 41";
 
 		self.spots[6] = SpawnStruct();
 		self.spots[6].mapName     = "Dow";
@@ -753,10 +777,18 @@ doGiveMenu() {
 			self.spots[6].slots[2].slotName     = "Dow_3";
 			self.spots[6].slots[2].slotFullname = "Downfall_3";
 			self.spots[6].slots[2].dpadRight    = "3371 10598 524 151 70";
-			self.spots[6].slots[2].dpadUp       = "";
-			self.spots[6].slots[2].lb           = "";
-			self.spots[6].slots[2].rb           = "";
-			self.spots[6].slots[2].rs           = "";
+			self.spots[6].slots[2].dpadUp       = "4625 5377 251 35 45";
+			self.spots[6].slots[2].lb           = "4508 5317 375 343 70";
+			self.spots[6].slots[2].rb           = "2078 7221 528 218 70";
+			self.spots[6].slots[2].rs           = "2218 7220 526 219 62";
+			self.spots[6].slots[3] = SpawnStruct();
+			self.spots[6].slots[3].slotName     = "Dow_4";
+			self.spots[6].slots[3].slotFullname = "Downfall_4";
+			self.spots[6].slots[3].dpadRight    = "-1038 9226 636 240 70";
+			self.spots[6].slots[3].dpadUp       = "3114 8142 291 339 70";
+			self.spots[6].slots[3].lb           = "1211 9478 636 178 70";
+			self.spots[6].slots[3].rb           = "-860 7838 636 223 70";
+			self.spots[6].slots[3].rs           = "1115 8515 459 18 70";
 
 		self.spots[7] = SpawnStruct();
 		self.spots[7].mapName     = "Han";
@@ -826,8 +858,24 @@ doGiveMenu() {
 			self.spots[9].slots[2].dpadRight    = "-1010 -1011 -1348 291 70";
 			self.spots[9].slots[2].dpadUp       = "1299 -1765 -1080 45 70";
 			self.spots[9].slots[2].lb           = "3402 93 -898 193 70";
-			self.spots[9].slots[2].rb           = "";
-			self.spots[9].slots[2].rs           = "";
+			self.spots[9].slots[2].rb           = "4696 634 -508 43 70";
+			self.spots[9].slots[2].rs           = "-331 1604 -1153 212 70";
+			self.spots[9].slots[3] = SpawnStruct();
+			self.spots[9].slots[3].slotName     = "Out_4";
+			self.spots[9].slots[3].slotFullname = "Outskirts_4";
+			self.spots[9].slots[3].dpadRight    = "-782 -673 -1263 110 62";
+			self.spots[9].slots[3].dpadUp       = "-1479 -555 -1577 171 59";
+			self.spots[9].slots[3].lb           = "-485 629 -893 297 70";
+			self.spots[9].slots[3].rb           = "2658 1048 -1100 282 60";
+			self.spots[9].slots[3].rs           = "1525 1722 -995 312 68";
+			self.spots[9].slots[4] = SpawnStruct();
+			self.spots[9].slots[4].slotName     = "Out_5";
+			self.spots[9].slots[4].slotFullname = "Outskirts_5";
+			self.spots[9].slots[4].dpadRight    = "-1338 -2077 -1339 126 70";
+			self.spots[9].slots[4].dpadUp       = "-1909 -374 -1176 64 70";
+			self.spots[9].slots[4].lb           = "-1906 -404 -1176 56 70";
+			self.spots[9].slots[4].rb           = "818 185 -748 89 70";
+			self.spots[9].slots[4].rs           = "-1414 1604 -1236 269 70";
 
 		self.spots[10] = SpawnStruct();
 		self.spots[10].mapName     = "Rou";
@@ -870,6 +918,14 @@ doGiveMenu() {
 			self.spots[11].slots[1].lb           = "1209 2246 542 213 70";
 			self.spots[11].slots[1].rb           = "2656 -2779 133 34 70";
 			self.spots[11].slots[1].rs           = "1535 2035 542 119 70";
+			self.spots[11].slots[2] = SpawnStruct();
+			self.spots[11].slots[2].slotName     = "See_3";
+			self.spots[11].slots[2].slotFullname = "Seelow_3";
+			self.spots[11].slots[2].dpadRight    = "1922 2278 542 348 70";
+			self.spots[11].slots[2].dpadUp       = "4042 6887 522 50 70";
+			self.spots[11].slots[2].lb           = "1725 1990 542 32 70";
+			self.spots[11].slots[2].rb           = "";
+			self.spots[11].slots[2].rs           = "";
 
 		self.spots[12] = SpawnStruct();
 		self.spots[12].mapName     = "Uph";
