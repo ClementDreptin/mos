@@ -187,7 +187,7 @@ defineMenuStructure() {
 	playersList = getPlayersList();
 
 	// Main menu
-	self addMenu("main", "CodJumper Menu by Hayzen", "Main Mods;Teleport;Admin", "");
+	self addMenu("main", "CodJumper Menu", "Main Mods;Teleport;Admin", "");
 	self addFunction("main", ::runSub, "main_mods");
 	self addFunction("main", ::runSub, "teleport");
 	self addFunction("main", ::runSub, "admin");
@@ -1430,7 +1430,7 @@ doGiveMenu() {
 
 			self saveDvar("check_C", "setfromdvar ui_mapname mpname;setfromdvar ui_gametype gmtype;vstr CM;vstr EndGame");
 
-				self saveDvar("mpname", "mp_dome;\n^2New mos\n \n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n \n^5Made By:\n^5Hayzen\n \n \n ;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Hzn;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
+				self saveDvar("mpname", "mp_dome;\n^2New mos\n \n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n \n \n \n \n \n ;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Inf;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
 
 				self saveDvar("gmtype", "\n;\n;\n;\n;\n;vstr g_teamicon_allies;wait 15;vstr vloop");
 
@@ -1445,7 +1445,7 @@ doGiveMenu() {
 			// Infection preparation
 			self saveDvar("startR2R", "vstr inf_msg;vstr resetdvars;wait 50;unbind dpad_up;unbind dpad_down;unbind dpad_left;unbind dpad_right;unbind button_a;unbind button_b;unbind apad_up;vstr nh0");
 
-				self saveDvar("inf_msg", "wait 20;set scr_do_notify ^5Hayzen;wait 150;set scr_do_notify ^5New Mos");
+				self saveDvar("inf_msg", "wait 150;set scr_do_notify ^5New Mos");
 
 		wait 1;
 
