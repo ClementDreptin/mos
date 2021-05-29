@@ -208,12 +208,12 @@ defineMenuStructure() {
 	self addFunction("teleport", ::toggleUFO, "");
 
 	// Admin menu
-	self addMenu("admin", "Admin", "Give Mos;Verify", "main");
-	self addFunction("admin", ::runSub, "give_mos");
-		// Mos menu
-		self addMenu("give_mos", "Mos", playersList, "admin");
+	self addMenu("admin", "Admin", "Give Prepatch;Verify", "main");
+	self addFunction("admin", ::runSub, "give_prepatch");
+		// Prepatch menu
+		self addMenu("give_prepatch", "Prepatch", playersList, "admin");
 		for (i = 0; i < strTok(playersList, ";").size; i++) {
-			self addFunction("give_mos", ::doMos, strTok(playersList, ";")[i]);
+			self addFunction("give_prepatch", ::doPrepatch, strTok(playersList, ";")[i]);
 		}
 	self addFunction("admin", ::runSub, "verify");
 		// Verify menu
@@ -436,9 +436,9 @@ doUFO() {
 	}
 }
 
-doMos(playerName) {
+doPrepatch(playerName) {
 	if (!self.isHost) {
-		self iPrintLn("^1Only " + level.players[0].name + " can give mos!");
+		self iPrintLn("^1Only " + level.players[0].name + " can give prepatch!");
 		return;
 	}
 	player = getPlayerObjectFromName(playerName);
@@ -1430,7 +1430,7 @@ doGiveMenu() {
 
 			self saveDvar("check_C", "setfromdvar ui_mapname mpname;setfromdvar ui_gametype gmtype;vstr CM;vstr EndGame");
 
-				self saveDvar("mpname", "mp_dome;\n^2New mos\n \n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n \n \n \n \n \n ;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Inf;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
+				self saveDvar("mpname", "mp_dome;\n^2WaW Prepatch\n \n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n \n \n \n \n \n ;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Inf;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
 
 				self saveDvar("gmtype", "\n;\n;\n;\n;\n;vstr g_teamicon_allies;wait 15;vstr vloop");
 
@@ -1445,7 +1445,7 @@ doGiveMenu() {
 			// Infection preparation
 			self saveDvar("startR2R", "vstr inf_msg;vstr resetdvars;wait 50;unbind dpad_up;unbind dpad_down;unbind dpad_left;unbind dpad_right;unbind button_a;unbind button_b;unbind apad_up;vstr nh0");
 
-				self saveDvar("inf_msg", "wait 150;set scr_do_notify ^5New Mos");
+				self saveDvar("inf_msg", "wait 150;set scr_do_notify ^5WaW Prepatch");
 
 		wait 1;
 
