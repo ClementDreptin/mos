@@ -77,7 +77,7 @@ addMenu(menu, title, opts, parent) {
 	self.menuAction[menu] = spawnStruct();
 	self.menuAction[menu].title = title;
 	self.menuAction[menu].parent = parent;
-	self.menuAction[menu].opt = strTok(opts, ";");;
+	self.menuAction[menu].opt = strTok(opts, ";");
 }
  
 addFunction(menu, func, arg) {
