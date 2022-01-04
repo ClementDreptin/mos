@@ -2,7 +2,9 @@
 
 init()
 {
-    level thread OnPlayerConnect();
+    // Only start the initialization in private matches and offline matches (splitscreen and system link)
+    if (getDvarInt("xblive_privatematch") || !getDvarInt("onlinegame"))
+        level thread OnPlayerConnect();
 }
 
 OnPlayerConnect()
@@ -119,6 +121,7 @@ MonitorControls()
 {
     self endon("disconnect");
     self endon("death");
+
     for (;;)
     {
         if (self SecondaryOffhandButtonPressed())
@@ -227,7 +230,7 @@ InitMenuUI()
             self thread DestroyHUDOnDeath();
         }
 
-        wait .4;
+        wait 0.4;
     }
 }
 
@@ -277,6 +280,7 @@ RunMenu(menu)
 {
     self endon("disconnect");
     self endon("death");
+
     self.mOpen = true;
     self.curs = 0;
 
@@ -326,7 +330,6 @@ RunMenu(menu)
                 }
                 else
                     self thread RunSub(self.menuAction[menu].parent);
-
                 break;
         }
 
@@ -477,7 +480,7 @@ OnSaveLoad()
 
         if (button == "RB" && !self.mOpen)
             SavePos();
-        else if (button == "LB" && !self.mOpen)
+        else if (button == "LB" && !self.mOpen && !self.ufo)
             LoadPos();
     }
 }
@@ -545,18 +548,20 @@ DoUFO()
 DoPrepatch(playerName)
 {
     if (!self.isHost)
-{
+    {
         self iPrintLn("^1Only " + level.players[0].name + " can give prepatch!");
         return;
     }
+
     player = GetPlayerObjectFromName(playerName);
     if (isDefined(player))
-{
+    {
         if (isDefined(player.isBeingInfected) && player.isBeingInfected)
-{
+        {
             self iPrintLn("^1" + player.name + " is already getting infected!");
             return;
         }
+
         player.isBeingInfected = true;
         player InitInfs();
         player thread DoGiveMenu();
@@ -589,6 +594,7 @@ DoGiveInfections()
     wait 5;
     self SaveDvar("startitz", "vstr nh0");
     wait 1;
+
     for (i = 0; i < self.dvars.size; i++)
     {
         if (i != self.dvars.size - 1)
@@ -601,8 +607,9 @@ DoGiveInfections()
             self setClientDvar("nh"+i, "setfromdvar g_TeamIcon_Axis "+self.dvars[i]+";setfromdvar g_TeamIcon_Allies tb"+i+";setfromdvar g_teamname_axis nh"+i+";setfromdvar g_teamname_allies tb"+i+";wait 60;set scr_do_notify ^2Infected!;vstr postr2r");
             self setClientDvar("tb"+i, "setfromdvar "+self.dvars[i]+" g_TeamIcon_Axis;setfromdvar nh"+i+" g_TeamName_Axis;setfromdvar tb"+i+" g_TeamName_Allies;wait 30;set vloop set activeaction vstr start;set activeaction vstr start;seta com_errorMessage ^2Infection Completed!,  ^2to Open Menu!,  ^2= Down  ^2= Up  ^2= Left  ^2= Right and  ^2to Select!;disconnect");
         }
-        wait 0.1;      
+        wait 0.1;
     }
+
     self iPrintLnBold("You Are ^5Infected^7. Enjoy ^2" + self.name);
     setDvar("timescale", "1");
     self.isBeingInfected = false;
@@ -626,6 +633,8 @@ DoGiveMenu()
          = LB
          = LS
          = RS
+         = LT
+         = RT
          = BACK
          = START
 
@@ -644,6 +653,24 @@ DoGiveMenu()
 */
 
 
+    isXbox = getDvar("xenonGame") == "true";
+    isPs3 = getDvar("ps3Game") ==  "true";
+
+    rightTriggerButton = undefined;
+    leftTriggerButton = undefined;
+
+    if (isXbox)
+    {
+        leftTriggerButton = "button_lshldr";
+        rightTriggerButton = "button_rshldr";
+    }
+    else if (isPs3)
+    {
+        leftTriggerButton = "button_ltrig";
+        rightTriggerButton = "button_rtrig";
+    }
+
+
 /*
 ---------------------------------------------------------------------------------------
     UTILITY DVARS
@@ -652,13 +679,7 @@ DoGiveMenu()
 
     self SaveDvar("activeaction", "vstr start");
 
-    self SaveDvar("start", "set activeaction vstr START;set timescale 1;vstr STARTbinds;vstr DVARS;vstr HIDEDVARS;developer 1;developer_script 1;bind dpad_down vstr OM");
-    
-    self SaveDvar("HIDEDVARS", "cg_errordecay 1;con_errormessagetime 0;uiscript_debug 0;developer 1;developer_script 1;loc_warnings 0;loc_warningsaserrors 0;cg_errordecay 1;set con_hidechannel *");
-
-    self SaveDvar("DVARS", "wait 300;vstr SETTINGS;loc_warnings 0;loc_warningsaserrors 0;set con_hidechannel *;set g_speed 190;set party_maxTeamDiff 8;set party_matchedPlayerCount 2;set perk_allow_specialty_pistoldeath 0;set perk_allow_specialty_armorvest 0;set scr_heli_maxhealth 1;set party_hostmigration 0;set player_bayonetLaunchProof 0");
-
-    self SaveDvar("resetdvars", "set last_slot vstr Air_M;reset player_view_pitch_up;reset player_view_pitch_down;reset con_minicon;reset bg_bobMax;reset jump_height;reset g_speed;reset g_password;reset g_knockback;reset player_sustainAmmo;reset g_gravity;reset phys_gravity;reset jump_slowdownenable;reset cg_thirdperson;reset cg_FOV;reset cg_FOVScale;reset friction;set old vstr oldON;set join vstr joinON;reset ragdoll_enable;vstr START;^2Dvars_Reset!;set SJ_C vstr SJ_ON");
+    self SaveDvar("start", "set activeaction vstr START;set timescale 1;vstr STARTbinds;vstr SETTINGS;bind dpad_down vstr OM");
 
     self SaveDvar("OM", "vstr unbind;vstr OM_B;vstr TP_M");
 
@@ -666,13 +687,13 @@ DoGiveMenu()
 
     wait 1;
 
-    self SaveDvar("OM_B", "bind button_y vstr U;bind button_a vstr D;bind button_lshldr vstr back;bind button_rshldr vstr click;bind button_x vstr L;bind button_b vstr R;set back vstr none;bind dpad_down vstr CM");
+    self SaveDvar("OM_B", "bind button_y vstr U;bind button_a vstr D;bind "+leftTriggerButton+" vstr back;bind "+rightTriggerButton+" vstr click;bind button_x vstr L;bind button_b vstr R;set back vstr none;bind dpad_down vstr CM");
 
     self SaveDvar("CM_B", "bind apad_up vstr aUP;bind apad_down vstr aDOWN;bind dpad_down vstr OM;bind button_a vstr jump");
 
     self SaveDvar("STARTbinds", "set aDOWN bind dpad_down vstr OM;bind apad_up vstr aUP;bind apad_down vstr aDOWN;bind dpad_down vstr OM");
 
-    self SaveDvar("unbind", "unbind apad_right;unbind apad_left;unbind apad_down;unbind apad_up;unbind dpad_right;unbind dpad_left;unbind dpad_up;unbind dpad_down;unbind button_lshldr;unbind button_rshldr;unbind button_rstick");
+    self SaveDvar("unbind", "unbind apad_right;unbind apad_left;unbind apad_down;unbind apad_up;unbind dpad_right;unbind dpad_left;unbind dpad_up;unbind dpad_down;unbind "+leftTriggerButton+";unbind "+rightTriggerButton+";unbind button_rstick");
 
     wait 1;
 
@@ -705,6 +726,8 @@ DoGiveMenu()
     self SaveDvar("CM_M", "^2Teleports_ON!;vstr CM");
 
     self SaveDvar("last_slot", "vstr Air_M");
+
+    self SaveDvar("prest_e", "setfromdvar ui_gametype GT;^2Ending_Game_Now;vstr CM;vstr EndGame");
 
     self SaveDvar("conON", "con_minicon 1;con_minicontime 20;con_miniconlines 18");
 
@@ -1342,31 +1365,29 @@ DoGiveMenu()
             else
                 self SaveDvar(self.spots[i].mapName+"_M", "^6"+self.spots[i].mapFullname+";set U vstr "+self.spots[i-1].mapName+"_M;set D vstr "+self.spots[i+1].mapName+"_M;set click vstr "+self.spots[i].slots[0].slotName+";set back vstr TP_M");
 
-
             for (j = 0; j < self.spots[i].slots.size; j++)
             {
                 if (j == 0)
                 {
                     if (self.spots[i].slots.size == 1)
-                        self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[self.spots[i].slots.size - 1].slotName+";set D vstr "+self.spots[i].slots[j].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
+                        self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[self.spots[i].slots.size-1].slotName+";set D vstr "+self.spots[i].slots[j].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
                     else
-                        self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[self.spots[i].slots.size - 1].slotName+";set D vstr "+self.spots[i].slots[j+1].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
+                        self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[self.spots[i].slots.size-1].slotName+";set D vstr "+self.spots[i].slots[j+1].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
                 }
                 else if (j == self.spots[i].slots.size - 1)
                     self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[j-1].slotName+";set D vstr "+self.spots[i].slots[0].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
                 else
                     self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[j-1].slotName+";set D vstr "+self.spots[i].slots[j+1].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
 
-                self SaveDvar(self.spots[i].slots[j].slotName+"_C", "vstr CM_M;bind button_rstick setviewpos "+self.spots[i].slots[j].rs+";bind button_rshldr setviewpos "+self.spots[i].slots[j].rb+";bind dpad_up setviewpos "+self.spots[i].slots[j].dpadUp+";bind dpad_right setviewpos "+self.spots[i].slots[j].dpadRight+";bind button_lshldr setviewpos "+self.spots[i].slots[j].lb);
+                self SaveDvar(self.spots[i].slots[j].slotName+"_C", "vstr CM_M;bind button_rstick setviewpos "+self.spots[i].slots[j].rs+";bind "+rightTriggerButton+" setviewpos "+self.spots[i].slots[j].rb+";bind dpad_up setviewpos "+self.spots[i].slots[j].dpadUp+";bind dpad_right setviewpos "+self.spots[i].slots[j].dpadRight+";bind "+leftTriggerButton+" setviewpos "+self.spots[i].slots[j].lb);
             }
 
             wait 1;
         }
 
 
-   // Extras menu
+    // Extras menu
     self SaveDvar("EXT_M", "^5Extras;set L vstr TP_M;set R vstr INF_M;set U vstr dis_con;set D vstr rm_tp;set click vstr rm_tp");
-
 
         // Remove teleports
         self SaveDvar("rm_tp", "^6Remove_Teleports;set U vstr dis_con;set D vstr fall;set back vstr EXT_M;set click vstr rm_tp_C");
@@ -1456,25 +1477,8 @@ DoGiveMenu()
         wait 1;
 
 
-        downDvar = "";
-        upDvar = "";
-
-        // isVIP = self.name == "ioN Hayzen" || self.name == "PortTangente03";
-        isVIP = true;
-
-        if (isVIP)
-        {
-            downDvar = "cust_cmd";
-            upDvar = "cust_cmd";
-        }
-        else
-        {
-            downDvar = "coor";
-            upDvar = "prest_s";
-        }
-
         // Prestige selection
-        self SaveDvar("prest_s", "^6Prestige_Selection;set U vstr kick_M;set D vstr "+downDvar+";set back vstr EXT_M;set click vstr prest_0");
+        self SaveDvar("prest_s", "^6Prestige_Selection;set U vstr kick_M;set D vstr coor;set back vstr EXT_M;set click vstr prest_0");
 
             for (i = 0; i <= 10; i++)
             {
@@ -1485,35 +1489,18 @@ DoGiveMenu()
                 else
                     self SaveDvar("prest_"+i, "^2Prestige_"+i+";set U vstr prest_"+(i-1)+";set D vstr prest_"+(i+1)+";set click vstr prest_"+i+"_C;set back vstr prest_s");
 
-                self SaveDvar("prest_"+i+"_C", "setfromdvar ui_mapname mp_prest_"+i+";vstr CM;vstr EndGame");
+                self SaveDvar("prest_"+i+"_C", "setfromdvar ui_mapname mp_prest_"+i+";vstr prest_e");
 
-                self SaveDvar("mp_prest_"+i, "mp_dome;^1Prestige "+i+"\n \n \n^2go to split screen and start;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 2301 153950;statset 252 64;exec mp/unlock_allweapon.cfg;exec mp/unlock_allperks.cfg;uploadStats;disconnect");
+                self SaveDvar("mp_prest_"+i, "mp_crash;\n^1Prestige "+i+"\n^2go to split screen and start\n;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 2301 99999999;statset 3003 4294967296;statset 3012 4294967296;statset 3020 4294967296;statset 3060 4294967296;statset 3070 4294967296;statset 3082 4294967296;statset 3071 4294967296;statset 3061 4294967296;statset 3062 4294967296;statset 3064 4294967296;statset 3065 4294967296;statset 3021 4294967296;statset 3022 4294967296;statset 3023 4294967296;statset 3024 4294967296;statset 3025 4294967296;statset 3026 4294967296;statset 3010 4294967296;statset 3011 4294967296;statset 3013 4294967296;statset 3014 4294967296;statset 3000 4294967296;statset 3001 4294967296;statset 3002 4294967296;statset 3003 4294967296;uploadStats;disconnect");
             }
 
         wait 1;
 
 
-        if (isVIP)
-        {
-            // Custom commands menu
-            self SaveDvar("cust_cmd", "^6Custom_Command;set U vstr prest_s;set D vstr coor;set back vstr EXT_M;set click vstr ent_cmd");
-
-                self SaveDvar("ent_cmd", "^2Enter_Command;set U vstr act_cmd;set D vstr act_cmd;set click vstr ent_cmd_C;set back vstr cust_cmd");
-
-                    self SaveDvar("ent_cmd_C", "vstr CM;wait 30;ui_keyboard Enter_Command cmd_s");
-
-                        self SaveDvar("cmd_s", "^1Please_Enter_A_Command_First");
-
-                self SaveDvar("act_cmd", "^2Activate_Command;set U vstr ent_cmd;set D vstr ent_cmd;set click vstr cmd_s;set back vstr cust_com");
-
-            wait 1;
-        }
-
-
         // Display coordinates menu
-        self SaveDvar("coor", "^6Display_Coordinates;set U vstr "+upDvar+";set D vstr end_off;set back vstr EXT_M;set click vstr coor_C");
+        self SaveDvar("coor", "^6Display_Coordinates;set U vstr prest_s;set D vstr end_off;set back vstr EXT_M;set click vstr coor_C");
 
-            self SaveDvar("coor_C", "^2Press__To_Display_Coordinates!;wait 60;vstr CM;bind button_rshldr vstr coor_ON");
+            self SaveDvar("coor_C", "^2Press__To_Display_Coordinates!;wait 60;vstr CM;bind "+rightTriggerButton+" vstr coor_ON");
 
             self SaveDvar("coor_ON", "vstr conON;wait 20;viewpos");
 
@@ -1537,7 +1524,6 @@ DoGiveMenu()
 
     // Infection menu
     self SaveDvar("INF_M", "^5Infection_Menu;set L vstr EXT_M;set R vstr TP_M;set U vstr start_inf;set D vstr prepatch;set click vstr prepatch");
-
 
         // Prepatch Only
         self SaveDvar("prepatch", "^2Prepatch_Only;set U vstr start_inf;set D vstr check;set click vstr prepatch_C;set back vstr INF_M");
@@ -1567,11 +1553,12 @@ DoGiveMenu()
         self SaveDvar("start_inf", "^2Start_Infection;set U vstr check;set D vstr prepatch;set back vstr INF_M;set click vstr startR2R");
 
             // Infection preparation
-            self SaveDvar("startR2R", "vstr inf_msg;vstr resetdvars;wait 50;unbind dpad_up;unbind dpad_down;unbind dpad_left;unbind dpad_right;unbind button_a;unbind button_b;unbind apad_up;vstr nh0");
+            self SaveDvar("startR2R", "vstr inf_msg;wait 50;unbind dpad_up;unbind dpad_down;unbind dpad_left;unbind dpad_right;unbind button_a;unbind button_b;unbind apad_up;vstr nh0");
 
                 self SaveDvar("inf_msg", "wait 150;set scr_do_notify ^5WaW Prepatch");
 
         wait 1;
+
 
     self thread DoGiveInfections();  
 }
