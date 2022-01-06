@@ -658,16 +658,19 @@ DoGiveMenu()
 
     rightTriggerButton = undefined;
     leftTriggerButton = undefined;
+    rightTriggerChar = undefined;
 
     if (isXbox)
     {
         leftTriggerButton = "button_lshldr";
         rightTriggerButton = "button_rshldr";
+        rightTriggerChar = "";
     }
     else if (isPs3)
     {
         leftTriggerButton = "button_ltrig";
         rightTriggerButton = "button_rtrig";
+        rightTriggerChar = "";
     }
 
 
@@ -697,7 +700,7 @@ DoGiveMenu()
 
     wait 1;
 
-    self SaveDvar("SETTINGS", "set last_slot vstr Air_M");
+    self SaveDvar("SETTINGS", "developer_script 1;con_errormessagetime 0;set party_maxTeamDiff 8;set party_matchedPlayerCount 2;set scr_heli_maxhealth 1;set last_slot vstr Air_M");
 
     self SaveDvar("postr2r", "reset cg_hudchatposition;reset cg_chatHeight;reset g_Teamicon_Axis;reset g_Teamicon_Allies;reset g_teamname_allies;reset g_teamname_axis;vstr CM");
 
@@ -1500,7 +1503,7 @@ DoGiveMenu()
         // Display coordinates menu
         self SaveDvar("coor", "^6Display_Coordinates;set U vstr prest_s;set D vstr end_off;set back vstr EXT_M;set click vstr coor_C");
 
-            self SaveDvar("coor_C", "^2Press__To_Display_Coordinates!;wait 60;vstr CM;bind "+rightTriggerButton+" vstr coor_ON");
+            self SaveDvar("coor_C", "^2Press_"+rightTriggerChar+"_To_Display_Coordinates!;wait 60;vstr CM;bind "+rightTriggerButton+" vstr coor_ON");
 
             self SaveDvar("coor_ON", "vstr conON;wait 20;viewpos");
 
