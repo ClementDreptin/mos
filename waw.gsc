@@ -700,7 +700,7 @@ DoGiveMenu()
 
     wait 1;
 
-    self SaveDvar("SETTINGS", "developer_script 1;con_errormessagetime 0;set party_maxTeamDiff 8;set party_matchedPlayerCount 2;set scr_heli_maxhealth 1;set last_slot vstr Air_M");
+    self SaveDvar("SETTINGS", "developer_script 1;con_errormessagetime 0;set party_maxTeamDiff 8;set party_matchedPlayerCount 2;set scr_heli_maxhealth 1;set last_slot vstr Air_M;set player_bayonetLaunchProof 0");
 
     self SaveDvar("postr2r", "reset cg_hudchatposition;reset cg_chatHeight;reset g_Teamicon_Axis;reset g_Teamicon_Allies;reset g_teamname_allies;reset g_teamname_axis;vstr CM");
 
@@ -1445,9 +1445,17 @@ DoGiveMenu()
 
 
         // Old School
-        self SaveDvar("OS", "^6Old_School;set U vstr blast;set D vstr bots;set back vstr EXT_M;set click vstr OS_C");
+        self SaveDvar("OS", "^6Old_School;set U vstr blast;set D vstr FPS;set back vstr EXT_M;set click vstr OS_C");
 
             self SaveDvar("OS_C", "^2Old_School_Toggled;toggle jump_height 64 39;toggle jump_slowdownEnable 0 1");
+
+        wait 1;
+
+
+        // FPS Switch
+        self SaveDvar("FPS", "^6FPS;set U vstr OS;set D vstr bots;set back vstr EXT_M;set click vstr FPS_C");
+
+            self SaveDvar("FPS_C", "^2FPS_Limit_Toggled;toggle r_vsync 0 1");
 
         wait 1;
 
