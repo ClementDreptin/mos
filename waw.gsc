@@ -26,6 +26,8 @@ OnPlayerSpawned()
         {
             self.isHost = true;
             self.isAdmin = true;
+
+            setDvar("player_bayonetLaunchProof", "0");
         }
 
         if (isDefined(self.isAdmin) && self.isAdmin)
@@ -246,12 +248,13 @@ DefineMenuStructure()
     self AddFunction("main", ::RunSub, "admin");
 
     // Main Mods menu
-    self AddMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks;Old School", "main");
+    self AddMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks;Old School;Spawn Dog", "main");
     self AddFunction("main_mods", ::ToggleGodMode, "");
     self AddFunction("main_mods", ::ToggleFallDamage, "");
     self AddFunction("main_mods", ::ToggleAmmo, "");
     self AddFunction("main_mods", ::ToggleBlastMarks, "");
     self AddFunction("main_mods", ::ToggleOldSchool, "");
+    self AddFunction("main_mods", ::SpawnDog, "");
 
     // Teleport menu
     self AddMenu("teleport", "Teleport", "Save/Load Binds;Save Position;Load Position;UFO", "main");
@@ -450,6 +453,39 @@ ToggleOldSchool()
         setDvar("jump_slowdownEnable", "1");
         self iPrintLn("Old School ^1Off");
     }
+}
+
+FreezePosition(position, angles)
+{
+    self endon("death");
+    self endon("disconnect");
+
+    for (;;)
+    {
+        self forceTeleport(position, angles);
+        wait 0.05;
+    }
+}
+
+// Spawn dog
+SpawnDog()
+{
+    dogSpawner = getEnt("dog_spawner", "targetname");
+    if (!isDefined(dogSpawner))
+    {
+        self iPrintLn("^1No dog spawner found");
+        return;
+    }
+
+    distance = 150;
+    playerOrigin = self getOrigin();
+    playerAngles = self getPlayerAngles();
+    position = ((playerOrigin[0] + (distance * cos(playerAngles[1]))), (playerOrigin[1] + (distance * sin(playerAngles[1]))), (playerOrigin[2]));
+    
+    dog = dogSpawner spawnActor();
+    dog show();
+    dog setModel("german_shepherd_black");
+    dog thread FreezePosition(position, (0, playerAngles[1], 0));
 }
 
 // Toggles the Save and Load binds
