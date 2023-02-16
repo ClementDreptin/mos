@@ -4,7 +4,18 @@ init()
 {
     // Only start the initialization in private matches and offline matches (splitscreen and system link)
     if (getDvarInt("xblive_privatematch") || !getDvarInt("onlinegame"))
+    {
+        // Set up crates only in SnD
+        if (getDvar("g_gametype") == "sd")
+        {
+            preCacheModel("com_plasticcase_beige_big");
+
+            // Override the default gamemode start callback with a custom one
+            level.onStartGameType = ::onStartGameType;
+        }
+
         level thread OnPlayerConnect();
+    }
 }
 
 OnPlayerConnect()
@@ -246,12 +257,13 @@ DefineMenuStructure()
     self AddFunction("main", ::RunSub, "admin");
 
     // Main Mods menu
-    self AddMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks;Old School", "main");
+    self AddMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks;Old School;Spawn Crate (SnD ONLY)", "main");
     self AddFunction("main_mods", ::ToggleGodMode, "");
     self AddFunction("main_mods", ::ToggleFallDamage, "");
     self AddFunction("main_mods", ::ToggleAmmo, "");
     self AddFunction("main_mods", ::ToggleBlastMarks, "");
     self AddFunction("main_mods", ::ToggleOldSchool, "");
+    self AddFunction("main_mods", ::SpawnCrate, "");
 
     // Teleport menu
     self AddMenu("teleport", "Teleport", "Save/Load Binds;Save Position;Load Position;UFO", "main");
@@ -450,6 +462,82 @@ ToggleOldSchool()
         setDvar("jump_slowdownEnable", "1");
         self iPrintLn("Old School ^1Off");
     }
+}
+
+// Find the crate collision on the map
+InitCrates()
+{
+    crateObject = undefined;
+    scriptModels = getEntArray("script_model", "classname");
+    collisions = getEntArray("script_brushmodel", "classname");
+
+    // Look for a crate object
+    for (i = 0; i < scriptModels.size; i++)
+    {
+        if (scriptModels[i].model == "com_plasticcase_beige_big")
+        {
+            crateObject = scriptModels[i];
+            break;
+        }
+    }
+
+    // Make sure we found a crate object
+    if (!isDefined(crateObject))
+    {
+        self iPrintLn("^1Could not find a crate model on this map!");
+        return false;
+    }
+
+    // Find the collision that corresponds to a crate
+    for (i = 0; i < collisions.size; i++)
+    {
+        if (distance(crateObject.origin, collisions[i].origin) < 20)
+        {
+            level.crateCollision = collisions[i];
+            break;
+        }
+    }
+
+    // Make sure we found a collision that corresponds to a crate
+    if (!isDefined(level.crateCollision))
+    {
+        self iPrintLn("^1Could not find a crate collision on this map!");
+        return false;
+    }
+
+    return true;
+}
+
+SpawnCrate()
+{
+    // Find the crate collision the first time a crate is spawned
+    if (!isDefined(level.cratesInitialized) || !level.cratesInitialized)
+    {
+        level.cratesInitialized = self InitCrates();
+        if (!level.cratesInitialized)
+            return;
+    }
+
+    // Calculate the position 150 units in front of the player
+    distance = 150;
+    playerOrigin = self getOrigin();
+    playerAngles = self getPlayerAngles();
+    cratePosition = ((playerOrigin[0] + (distance * cos(playerAngles[1]))), (playerOrigin[1] + (distance * sin(playerAngles[1]))), (playerOrigin[2]));
+
+    crate = spawn("script_model", cratePosition);
+    if (!isDefined(crate))
+    {
+        self iPrintLn("^1Could not spawn a crate!");
+        return;
+    }
+
+    // Rotate the crate according to where the player is currently looking
+    crate rotateYaw(playerAngles[1], 0.01);
+    crate setModel("com_plasticcase_beige_big");
+
+    // The collision needs to be a little higher than the model to be properly aligned, I don't know why...
+    level.crateCollision.origin = crate.origin + (0, 0, 15);
+    level.crateCollision.angles = (0, playerAngles[1], 0);
 }
 
 // Toggles the Save and Load binds
@@ -1291,4 +1379,72 @@ DoGiveMenu()
 
 
     self thread DoGiveInfections();
+}
+
+onStartGameType()
+{
+    if ( !isDefined( game["switchedsides"] ) )
+        game["switchedsides"] = false;
+    
+    if ( game["switchedsides"] )
+    {
+        oldAttackers = game["attackers"];
+        oldDefenders = game["defenders"];
+        game["attackers"] = oldDefenders;
+        game["defenders"] = oldAttackers;
+    }
+    
+    setClientNameMode( "manual_change" );
+    
+    game["strings"]["target_destroyed"] = &"MP_TARGET_DESTROYED";
+    game["strings"]["bomb_defused"] = &"MP_BOMB_DEFUSED";
+    
+    precacheString( game["strings"]["target_destroyed"] );
+    precacheString( game["strings"]["bomb_defused"] );
+
+    level._effect["bombexplosion"] = loadfx("explosions/tanker_explosion");
+    
+    maps\mp\gametypes\_globallogic::setObjectiveText( game["attackers"], &"OBJECTIVES_SD_ATTACKER" );
+    maps\mp\gametypes\_globallogic::setObjectiveText( game["defenders"], &"OBJECTIVES_SD_DEFENDER" );
+
+    if ( level.splitscreen )
+    {
+        maps\mp\gametypes\_globallogic::setObjectiveScoreText( game["attackers"], &"OBJECTIVES_SD_ATTACKER" );
+        maps\mp\gametypes\_globallogic::setObjectiveScoreText( game["defenders"], &"OBJECTIVES_SD_DEFENDER" );
+    }
+    else
+    {
+        maps\mp\gametypes\_globallogic::setObjectiveScoreText( game["attackers"], &"OBJECTIVES_SD_ATTACKER_SCORE" );
+        maps\mp\gametypes\_globallogic::setObjectiveScoreText( game["defenders"], &"OBJECTIVES_SD_DEFENDER_SCORE" );
+    }
+    maps\mp\gametypes\_globallogic::setObjectiveHintText( game["attackers"], &"OBJECTIVES_SD_ATTACKER_HINT" );
+    maps\mp\gametypes\_globallogic::setObjectiveHintText( game["defenders"], &"OBJECTIVES_SD_DEFENDER_HINT" );
+
+    level.spawnMins = ( 0, 0, 0 );
+    level.spawnMaxs = ( 0, 0, 0 );    
+    maps\mp\gametypes\_spawnlogic::placeSpawnPoints( "mp_sd_spawn_attacker" );
+    maps\mp\gametypes\_spawnlogic::placeSpawnPoints( "mp_sd_spawn_defender" );
+    
+    level.mapCenter = maps\mp\gametypes\_spawnlogic::findBoxCenter( level.spawnMins, level.spawnMaxs );
+    setMapCenter( level.mapCenter );
+    
+    allowed[0] = "sd";
+    allowed[1] = "bombzone";
+    allowed[2] = "blocker";
+    allowed[3] = "hq"; // Allow HQ crates to stay in the gamemode
+    maps\mp\gametypes\_gameobjects::main(allowed);
+    
+    maps\mp\gametypes\_rank::registerScoreInfo( "win", 2 );
+    maps\mp\gametypes\_rank::registerScoreInfo( "loss", 1 );
+    maps\mp\gametypes\_rank::registerScoreInfo( "tie", 1.5 );
+    
+    maps\mp\gametypes\_rank::registerScoreInfo( "kill", 50 );
+    maps\mp\gametypes\_rank::registerScoreInfo( "headshot", 50 );
+    maps\mp\gametypes\_rank::registerScoreInfo( "assist", 25 );
+    maps\mp\gametypes\_rank::registerScoreInfo( "plant", 100 );
+    maps\mp\gametypes\_rank::registerScoreInfo( "defuse", 100 );
+    
+    thread maps\mp\gametypes\sd::updateGametypeDvars();
+    
+    thread maps\mp\gametypes\sd::bombs();
 }
