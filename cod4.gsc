@@ -385,8 +385,8 @@ ToggleGodMode()
 // Changes the health value for God Mode
 DoGodMode()
 {
-    self endon ("disconnect");
-    self endon ("stop_god");
+    self endon("disconnect");
+    self endon("stop_god");
 
     self.maxHealth = 999999;
     self.health = self.maxHealth;
@@ -562,6 +562,7 @@ OnSaveLoad()
 {
     self endon("disconnect");
     self endon("unbind");
+
     for (;;)
     {
         self waittill("buttonPressed", button);
@@ -598,38 +599,50 @@ SavePos()
 
 ToggleUFO()
 {
-    if (!isDefined(self.ufo) || self.ufo == false)
+    if (!isDefined(self.ufoBinds) || self.ufoBinds == false)
     {
-        self iPrintLn("UFO ^2On^7, use [{+smoke}] to fly!");
+        self iPrintLn("UFO Binds ^2On^7, press [{+usereload}] to toggle UFO!");
         self thread DoUFO();
-        self.ufo = true;
+        self.ufoBinds = true;
     }
     else
     {
-        self iPrintLn("UFO ^1Off");
+        self iPrintLn("UFO Binds ^1Off");
         self unlink();
         self notify("ufo_off");
-        self.ufo = false;
+        self.ufoBinds = false;
     }
 }
 
 DoUFO()
 {
+    self endon("disconnect");
     self endon("death");
     self endon("ufo_off");
-    if (isDefined(self.newUfo)) self.newUfo delete();
-    self.newUfo = spawn("script_origin", self.origin);
-    self.newUfo.origin = self.origin;
-    self linkTo(self.newUfo);
+
+    maps\mp\gametypes\_spectating::setSpectatePermissions();
+
     for (;;)
     {
-        vec = anglesToForward(self getPlayerAngles());
-        if (self SecondaryOffhandButtonPressed() && self GetStance() == "stand")
+        self waittill("buttonPressed", button);
+
+        if (button == "X" && !self.mOpen)
         {
-            end = (vec[0] * 75, vec[1] * 75, vec[2] * 75);
-            self.newUfo.origin = self.newUfo.origin + end;
+            if (!isDefined(self.ufo) || self.ufo == false)
+            {
+                self allowSpectateTeam("freelook", true);
+                self.sessionstate = "spectator";
+                self setContents(0);
+                self.ufo = true;
+            }
+            else
+            {
+                self allowSpectateTeam("freelook", false);
+                self.sessionstate = "playing";
+                self setContents(100);
+                self.ufo = false;
+            }
         }
-        wait 0.05;
     }
 }
 
