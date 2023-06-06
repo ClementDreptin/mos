@@ -522,7 +522,7 @@ OnSaveLoad()
 
         if (button == "RB" && !self.mOpen)
             SavePos();
-        else if (button == "LB" && !self.mOpen && !self.ufo)
+        else if (button == "LB" && !self.mOpen)
             LoadPos();
     }
 }
