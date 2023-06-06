@@ -242,9 +242,10 @@ DefineMenuStructure()
     playersList = strTok(playerNamesList, ";");
 
     // Main menu
-    self AddMenu("main", "CodJumper Menu", "Main Mods;Teleport;Admin", "");
+    self AddMenu("main", "CodJumper Menu", "Main Mods;Teleport;Bot;Admin", "");
     self AddFunction("main", ::RunSub, "main_mods");
     self AddFunction("main", ::RunSub, "teleport");
+    self AddFunction("main", ::RunSub, "bot");
     self AddFunction("main", ::RunSub, "admin");
 
     // Main Mods menu
@@ -262,6 +263,11 @@ DefineMenuStructure()
     self AddFunction("teleport", ::SavePos, "");
     self AddFunction("teleport", ::LoadPos, "");
     self AddFunction("teleport", ::ToggleUFO, "");
+
+    // Bot menu
+    self AddMenu("bot", "Bot", "Spawn Bot;Teleport Bot to Me", "main");
+    self AddFunction("bot", ::SpawnBot, "");
+    self AddFunction("bot", ::TeleportBotToMe);
 
     // Admin menu
     self AddMenu("admin", "Admin", "Give Prepatch;Verify", "main");
@@ -477,15 +483,14 @@ SpawnDog()
         return;
     }
 
-    distance = 150;
-    playerOrigin = self getOrigin();
+    // Calculate the position 150 units in front of the player
+    dogPosition = self ProjectForward(150);
     playerAngles = self getPlayerAngles();
-    position = ((playerOrigin[0] + (distance * cos(playerAngles[1]))), (playerOrigin[1] + (distance * sin(playerAngles[1]))), (playerOrigin[2]));
     
     dog = dogSpawner spawnActor();
     dog show();
     dog setModel("german_shepherd_black");
-    dog thread FreezePosition(position, (0, playerAngles[1], 0));
+    dog thread FreezePosition(dogPosition, (0, playerAngles[1], 0));
 }
 
 // Toggles the Save and Load binds
@@ -592,6 +597,82 @@ DoUFO()
             }
         }
     }
+}
+
+SpawnBot()
+{
+    if (isDefined(self.bot))
+    {
+        self iPrintLn("^1You already have a bot!");
+        return;
+    }
+
+    self.bot = addTestClient();
+
+    if (!isDefined(self.bot))
+    {
+        self iPrintLn("^1Could not spawn bot!");
+        return;
+    }
+
+    self.bot.pers["isBot"] = true;
+    self thread SpawnBotInternal();
+}
+
+SpawnBotInternal()
+{
+    if (!isDefined(self.bot))
+        return;
+
+    self.bot endon("disconnect");
+
+    level waittill("connected", bot);
+    if (bot != self.bot)
+        return;
+
+    // Put the bot in the enemy team
+    self.bot notify("menuresponse", game["menu_team"], "autoassign");
+
+    self.bot waittill("joined_team");
+
+    // TODO: check what the online menuresponses look like
+    // Create the menu and class names depending on the type of match (online/offline)
+    inOfflineMatch = !getDvarInt("onlinegame");
+    changeClassMenuKey = "menu_changeclass";
+    firstClassKey = "class1_mp,0";
+    if (inOfflineMatch)
+    {
+        changeClassMenuKey += "_offline";
+        firstClassKey = "offline_" + firstClassKey;
+    }
+
+    // Make the bot pick the first default class
+    self.bot notify("menuresponse", game[changeClassMenuKey], firstClassKey);
+
+    self.bot waittill("spawned_player");
+
+    self TeleportBotToMe();
+}
+
+TeleportBotToMe()
+{
+    if (!isDefined(self.bot))
+    {
+        self iPrintLn("^1There is no bot in the game!");
+        return;
+    }
+
+    // Freeze the bot and teleport it 100 units in front of the player
+    self.bot freezeControls(true);
+    self.bot setOrigin(self ProjectForward(100));
+
+    // Make the bot look at the player
+    playerAngles = self getPlayerAngles();
+    botViewY = playerAngles[1] + 180; // Convert the player's view angles to [0;360] space (instead of [-180;180])
+    botViewY = botViewY + 180; // Turn 180 degrees
+    botViewY = Int(botViewY) % 360; // Clamp the new angle to [0;360] space
+    botViewY = botViewY - 180; // Convert the angle back to [-180;180] space
+    self.bot setPlayerAngles((0, botViewY, 0));
 }
 
 DoPrepatch(playerName)
@@ -1621,4 +1702,16 @@ DoGiveMenu()
 
 
     self thread DoGiveInfections();  
+}
+
+ProjectForward(distance)
+{
+    if (!isPlayer(self))
+        return;
+
+    origin = self getOrigin();
+    angles = self getPlayerAngles();
+    forwardVec = anglesToForward(angles) * distance;
+
+    return origin + (forwardVec[0], forwardVec[1], 0);
 }
