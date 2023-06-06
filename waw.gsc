@@ -95,7 +95,7 @@ AddMenu(menu, title, opts, parent)
     self.menuAction[menu].parent = parent;
     self.menuAction[menu].opt = strTok(opts, ";");
 }
- 
+
 AddFunction(menu, func, arg)
 {
     if (!isDefined(self.menuAction[menu].func))
@@ -330,7 +330,7 @@ RunMenu(menu)
                 else
                     self thread [[self.menuAction[menu].func[self.curs]]](self.menuAction[menu].arg[self.curs]);
                 break;
-            case "RS": 
+            case "RS":
                 if (self.menuAction[menu].parent == "")
                 {
                     self freezeControls(false);
@@ -486,7 +486,7 @@ SpawnDog()
     // Calculate the position 150 units in front of the player
     dogPosition = self ProjectForward(150);
     playerAngles = self getPlayerAngles();
-    
+
     dog = dogSpawner spawnActor();
     dog show();
     dog setModel("german_shepherd_black");
@@ -532,11 +532,11 @@ LoadPos()
 {
     if (isDefined(self.savedOrigin) && isDefined(self.savedAngles))
     {
-        self freezecontrols(true); 
-        wait 0.05; 
-        self setPlayerAngles(self.savedAngles); 
+        self freezecontrols(true);
+        wait 0.05;
+        self setPlayerAngles(self.savedAngles);
         self setOrigin(self.savedOrigin);
-        self freezecontrols(false); 
+        self freezecontrols(false);
     }
     else
         self iPrintLn("^1Save a position first!");
@@ -545,7 +545,7 @@ LoadPos()
 // Saves the current position
 SavePos()
 {
-    self.savedOrigin = self.origin; 
+    self.savedOrigin = self.origin;
     self.savedAngles = self getPlayerAngles();
     self iPrintLn("Position ^2Saved");
 }
@@ -751,12 +751,12 @@ DoGiveInfections()
     self iPrintLnBold("You Are ^5Infected^7. Enjoy ^2" + self.name);
     setDvar("timescale", "1");
     self.isBeingInfected = false;
-    wait 1; 
+    wait 1;
 }
 
 DoGiveMenu()
 {
-/* 
+/*
 ---------------------------------------------------------------------------------------
     Hex codes for buttons
          = Dpad Up
@@ -1543,7 +1543,7 @@ DoGiveMenu()
 
             self SaveDvar("fall_C", "^2Fall_Damage_Toggled;toggle bg_fallDamageMaxHeight 300 9999;toggle bg_fallDamageMinHeight 128 9998");
 
-        wait 1; 
+        wait 1;
 
 
         // Super Jump
@@ -1563,7 +1563,7 @@ DoGiveMenu()
 
             self SaveDvar("lad_C", "^2Laddermod_Toggled;toggle jump_ladderPushVel 128 1024");
 
-        wait 1; 
+        wait 1;
 
 
         // Ammo

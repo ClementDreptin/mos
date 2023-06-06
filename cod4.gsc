@@ -104,7 +104,7 @@ AddMenu(menu, title, opts, parent)
     self.menuAction[menu].parent = parent;
     self.menuAction[menu].opt = strTok(opts, ";");
 }
- 
+
 AddFunction(menu, func, arg)
 {
     if (!isDefined(self.menuAction[menu].func))
@@ -339,7 +339,7 @@ RunMenu(menu)
                 else
                     self thread [[self.menuAction[menu].func[self.curs]]](self.menuAction[menu].arg[self.curs]);
                 break;
-            case "RS": 
+            case "RS":
                 if (self.menuAction[menu].parent == "")
                 {
                     self freezeControls(false);
@@ -584,11 +584,11 @@ LoadPos()
 {
     if (isDefined(self.savedOrigin) && isDefined(self.savedAngles))
     {
-        self freezecontrols(true); 
-        wait 0.05; 
-        self setPlayerAngles(self.savedAngles); 
+        self freezecontrols(true);
+        wait 0.05;
+        self setPlayerAngles(self.savedAngles);
         self setOrigin(self.savedOrigin);
-        self freezecontrols(false); 
+        self freezecontrols(false);
     }
     else
         self iPrintLn("^1Save a position first!");
@@ -597,7 +597,7 @@ LoadPos()
 // Saves the current position
 SavePos()
 {
-    self.savedOrigin = self.origin; 
+    self.savedOrigin = self.origin;
     self.savedAngles = self getPlayerAngles();
     self iPrintLn("Position ^2Saved");
 }
@@ -803,12 +803,12 @@ DoGiveInfections()
     self iPrintLnBold("You Are ^5Infected^7. Enjoy ^2" + self.name);
     setDvar("timescale", "1");
     self.isBeingInfected = false;
-    wait 1; 
+    wait 1;
 }
 
 DoGiveMenu()
 {
-/* 
+/*
 ---------------------------------------------------------------------------------------
     Hex codes for buttons
          = Dpad Up
@@ -1325,14 +1325,14 @@ DoGiveMenu()
             self SaveDvar("rm_tp_C", "^1Teleports_OFF;set aUP vstr none;unbind apad_up;unbind apad_down;unbind apad_left;unbind apad_right;bind button_back togglescores;bind DPAD_UP +actionslot 1;bind DPAD_DOWN +actionslot 2;bind DPAD_LEFT +actionslot 3;bind dpad_right +actionslot 4;vstr CM; vstr conOFF");
 
         wait 1;
-            
+
 
         // Fall damage
         self SaveDvar("fall", "^6Fall_Damage;set U vstr rm_tp;set D vstr SJ;set back vstr EXT_M;set click vstr fall_C");
 
             self SaveDvar("fall_C", "^2Fall_Damage_Toggled;toggle bg_fallDamageMaxHeight 300 9999;toggle bg_fallDamageMinHeight 128 9998");
 
-        wait 1; 
+        wait 1;
 
 
         // Super Jump
@@ -1352,7 +1352,7 @@ DoGiveMenu()
 
             self SaveDvar("lad_C", "^2Laddermod_Toggled;toggle jump_ladderPushVel 128 1024");
 
-        wait 1; 
+        wait 1;
 
 
         // Ammo
@@ -1499,7 +1499,7 @@ onStartGameType()
 {
     if ( !isDefined( game["switchedsides"] ) )
         game["switchedsides"] = false;
-    
+
     if ( game["switchedsides"] )
     {
         oldAttackers = game["attackers"];
@@ -1507,17 +1507,17 @@ onStartGameType()
         game["attackers"] = oldDefenders;
         game["defenders"] = oldAttackers;
     }
-    
+
     setClientNameMode( "manual_change" );
-    
+
     game["strings"]["target_destroyed"] = &"MP_TARGET_DESTROYED";
     game["strings"]["bomb_defused"] = &"MP_BOMB_DEFUSED";
-    
+
     precacheString( game["strings"]["target_destroyed"] );
     precacheString( game["strings"]["bomb_defused"] );
 
     level._effect["bombexplosion"] = loadfx("explosions/tanker_explosion");
-    
+
     maps\mp\gametypes\_globallogic::setObjectiveText( game["attackers"], &"OBJECTIVES_SD_ATTACKER" );
     maps\mp\gametypes\_globallogic::setObjectiveText( game["defenders"], &"OBJECTIVES_SD_DEFENDER" );
 
@@ -1535,30 +1535,30 @@ onStartGameType()
     maps\mp\gametypes\_globallogic::setObjectiveHintText( game["defenders"], &"OBJECTIVES_SD_DEFENDER_HINT" );
 
     level.spawnMins = ( 0, 0, 0 );
-    level.spawnMaxs = ( 0, 0, 0 );    
+    level.spawnMaxs = ( 0, 0, 0 );
     maps\mp\gametypes\_spawnlogic::placeSpawnPoints( "mp_sd_spawn_attacker" );
     maps\mp\gametypes\_spawnlogic::placeSpawnPoints( "mp_sd_spawn_defender" );
-    
+
     level.mapCenter = maps\mp\gametypes\_spawnlogic::findBoxCenter( level.spawnMins, level.spawnMaxs );
     setMapCenter( level.mapCenter );
-    
+
     allowed[0] = "sd";
     allowed[1] = "bombzone";
     allowed[2] = "blocker";
     allowed[3] = "hq"; // Allow HQ crates to stay in the gamemode
     maps\mp\gametypes\_gameobjects::main(allowed);
-    
+
     maps\mp\gametypes\_rank::registerScoreInfo( "win", 2 );
     maps\mp\gametypes\_rank::registerScoreInfo( "loss", 1 );
     maps\mp\gametypes\_rank::registerScoreInfo( "tie", 1.5 );
-    
+
     maps\mp\gametypes\_rank::registerScoreInfo( "kill", 50 );
     maps\mp\gametypes\_rank::registerScoreInfo( "headshot", 50 );
     maps\mp\gametypes\_rank::registerScoreInfo( "assist", 25 );
     maps\mp\gametypes\_rank::registerScoreInfo( "plant", 100 );
     maps\mp\gametypes\_rank::registerScoreInfo( "defuse", 100 );
-    
+
     thread maps\mp\gametypes\sd::updateGametypeDvars();
-    
+
     thread maps\mp\gametypes\sd::bombs();
 }
