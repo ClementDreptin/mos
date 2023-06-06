@@ -265,9 +265,9 @@ DefineMenuStructure()
     self AddFunction("teleport", ::ToggleUFO, "");
 
     // Bot menu
-    self AddMenu("bot", "Bot", "Spawn Bot;Teleport Bot to Me", "main");
+    self AddMenu("bot", "Bot", "Spawn Bot;Teleport Bot to Crosshair", "main");
     self AddFunction("bot", ::SpawnBot, "");
-    self AddFunction("bot", ::TeleportBotToMe);
+    self AddFunction("bot", ::TeleportBotToCrosshair);
 
     // Admin menu
     self AddMenu("admin", "Admin", "Give Prepatch;Verify", "main");
@@ -651,10 +651,10 @@ SpawnBotInternal()
 
     self.bot waittill("spawned_player");
 
-    self TeleportBotToMe();
+    self TeleportBotToCrosshair();
 }
 
-TeleportBotToMe()
+TeleportBotToCrosshair()
 {
     if (!isDefined(self.bot))
     {
@@ -662,12 +662,20 @@ TeleportBotToMe()
         return;
     }
 
-    // Freeze the bot and teleport it 100 units in front of the player
+    // Cast a ray very far forward
+    playerAngles = self getPlayerAngles();
+    forward = anglesToForward(playerAngles);
+    trace = bulletTrace(self.origin + (0, 0, 20), self.origin + forward * 10000, false, undefined);
+
+    // Return early if the ray didn't hit anything
+    if (trace["fraction"] > 0.5)
+        return;
+
+    // Freeze the bot and teleport it to the player's crosshair
     self.bot freezeControls(true);
-    self.bot setOrigin(self ProjectForward(100));
+    self.bot setOrigin(trace["position"]);
 
     // Make the bot look at the player
-    playerAngles = self getPlayerAngles();
     botViewY = playerAngles[1] + 180; // Convert the player's view angles to [0;360] space (instead of [-180;180])
     botViewY = botViewY + 180; // Turn 180 degrees
     botViewY = Int(botViewY) % 360; // Clamp the new angle to [0;360] space
@@ -1701,7 +1709,7 @@ DoGiveMenu()
         wait 1;
 
 
-    self thread DoGiveInfections();  
+    self thread DoGiveInfections();
 }
 
 ProjectForward(distance)
