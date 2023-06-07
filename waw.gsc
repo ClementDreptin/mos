@@ -635,15 +635,19 @@ SpawnBotInternal()
 
     self.bot waittill("joined_team");
 
-    // TODO: check what the online menuresponses look like
     // Create the menu and class names depending on the type of match (online/offline)
     inOfflineMatch = !getDvarInt("onlinegame");
-    changeClassMenuKey = "menu_changeclass";
-    firstClassKey = "class1_mp,0";
+    changeClassMenuKey = undefined;
+    firstClassKey = undefined;
     if (inOfflineMatch)
     {
-        changeClassMenuKey += "_offline";
-        firstClassKey = "offline_" + firstClassKey;
+        changeClassMenuKey = "menu_changeclass_offline";
+        firstClassKey = "offline_class1_mp,0";
+    }
+    else
+    {
+        changeClassMenuKey = "menu_changeclass";
+        firstClassKey = "assault_mp,0";
     }
 
     // Make the bot pick the first default class
