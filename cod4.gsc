@@ -890,7 +890,7 @@ DoGiveMenu()
 
     wait 1;
 
-    self SaveDvar("SETTINGS", "developer_script 1;con_errormessagetime 0;set party_maxTeamDiff 8;set party_matchedPlayerCount 2;set scr_heli_maxhealth 1;set last_slot vstr Amb_M");
+    self SaveDvar("SETTINGS", "set last_slot vstr Amb_M");
 
     self SaveDvar("postr2r", "reset cg_hudchatposition;reset cg_chatHeight;reset g_Teamicon_Axis;reset g_Teamicon_Allies;reset g_teamname_allies;reset g_teamname_axis;vstr CM");
 
