@@ -850,22 +850,11 @@ DoGiveMenu()
     isXbox = getDvar("xenonGame") == "true";
     isPs3 = getDvar("ps3Game") ==  "true";
 
-    rightTriggerButton = undefined;
-    leftTriggerButton = undefined;
-    rightTriggerChar = undefined;
-
+    defaultButtonLayout = undefined;
     if (isXbox)
-    {
-        leftTriggerButton = "button_lshldr";
-        rightTriggerButton = "button_rshldr";
-        rightTriggerChar = "";
-    }
+        defaultButtonLayout = "buttons_default.cfg";
     else if (isPs3)
-    {
-        leftTriggerButton = "button_ltrig";
-        rightTriggerButton = "button_rtrig";
-        rightTriggerChar = "";
-    }
+        defaultButtonLayout = "buttons_default_alt.cfg";
 
 
 /*
@@ -880,17 +869,17 @@ DoGiveMenu()
 
     self SaveDvar("OM", "vstr unbind;vstr OM_B;vstr TP_M");
 
-    self SaveDvar("CM", "exec buttons_default.cfg;wait 20;vstr CM_B;wait 50;^1Menu_Closed");
+    self SaveDvar("CM", "exec "+defaultButtonLayout+";wait 20;vstr CM_B;wait 50;^1Menu_Closed");
 
     wait 1;
 
-    self SaveDvar("OM_B", "bind button_y vstr U;bind button_a vstr D;bind "+leftTriggerButton+" vstr back;bind "+rightTriggerButton+" vstr click;bind button_x vstr L;bind button_b vstr R;set back vstr none;bind dpad_down vstr CM");
+    self SaveDvar("OM_B", "bind button_y vstr U;bind button_a vstr D;bind button_lshldr vstr back;bind button_rshldr vstr click;bind button_x vstr L;bind button_b vstr R;set back vstr none;bind dpad_down vstr CM");
 
     self SaveDvar("CM_B", "bind apad_up vstr aUP;bind apad_down vstr aDOWN;bind dpad_down vstr OM;bind button_a vstr jump");
 
     self SaveDvar("STARTbinds", "set aDOWN bind dpad_down vstr OM;bind apad_up vstr aUP;bind apad_down vstr aDOWN;bind dpad_down vstr OM");
 
-    self SaveDvar("unbind", "unbind apad_right;unbind apad_left;unbind apad_down;unbind apad_up;unbind dpad_right;unbind dpad_left;unbind dpad_up;unbind dpad_down;unbind "+leftTriggerButton+";unbind "+rightTriggerButton+";unbind button_rstick");
+    self SaveDvar("unbind", "unbind apad_right;unbind apad_left;unbind apad_down;unbind apad_up;unbind dpad_right;unbind dpad_left;unbind dpad_up;unbind dpad_down;unbind button_lshldr;unbind button_rshldr;unbind button_rstick");
 
     wait 1;
 
@@ -1313,7 +1302,7 @@ DoGiveMenu()
                 else
                     self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[j-1].slotName+";set D vstr "+self.spots[i].slots[j+1].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
 
-                self SaveDvar(self.spots[i].slots[j].slotName+"_C", "vstr CM_M;bind button_rstick setviewpos "+self.spots[i].slots[j].rs+";bind "+rightTriggerButton+" setviewpos "+self.spots[i].slots[j].rb+";bind dpad_up setviewpos "+self.spots[i].slots[j].dpadUp+";bind dpad_right setviewpos "+self.spots[i].slots[j].dpadRight+";bind "+leftTriggerButton+" setviewpos "+self.spots[i].slots[j].lb);
+                self SaveDvar(self.spots[i].slots[j].slotName+"_C", "vstr CM_M;bind button_rstick setviewpos "+self.spots[i].slots[j].rs+";bind button_rshldr setviewpos "+self.spots[i].slots[j].rb+";bind dpad_up setviewpos "+self.spots[i].slots[j].dpadUp+";bind dpad_right setviewpos "+self.spots[i].slots[j].dpadRight+";bind button_lshldr setviewpos "+self.spots[i].slots[j].lb);
             }
 
             wait 1;
@@ -1434,7 +1423,7 @@ DoGiveMenu()
         // Display coordinates menu
         self SaveDvar("coor", "^6Display_Coordinates;set U vstr prest_s;set D vstr end_off;set back vstr EXT_M;set click vstr coor_C");
 
-            self SaveDvar("coor_C", "^2Press_"+rightTriggerChar+"_To_Display_Coordinates!;wait 60;vstr CM;bind "+rightTriggerButton+" vstr coor_ON");
+            self SaveDvar("coor_C", "^2Press__To_Display_Coordinates!;wait 60;vstr CM;bind button_rshldr vstr coor_ON");
 
             self SaveDvar("coor_ON", "vstr conON;wait 20;viewpos");
 
