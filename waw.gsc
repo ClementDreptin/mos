@@ -22,7 +22,21 @@ OnPlayerSpawned()
     for (;;)
     {
         self waittill("spawned_player");
-        if (self == level.players[0])
+
+        // The host client num is not always 0, when a bot is already in the game
+        // when the round starts, it typically gets the client num 0.
+        // The host is the first client with pers["isBot"] undefined.
+        hostClientNum = 0;
+        for (i = 0; i < level.players.size; i++)
+        {
+            if (!level.players[i].pers["isBot"])
+            {
+                hostClientNum = i;
+                break;
+            }
+        }
+
+        if (self == level.players[hostClientNum])
         {
             self.isHost = true;
             self.isAdmin = true;
