@@ -281,11 +281,12 @@ DefineMenuStructure()
     self AddFunction("main_mods", ::SpawnCrate, "");
 
     // Teleport menu
-    self AddMenu("teleport", "Teleport", "Save/Load Binds;Save Position;Load Position;UFO", "main");
+    self AddMenu("teleport", "Teleport", "Save/Load Binds;Save Position;Load Position;UFO;Send to Sky", "main");
     self AddFunction("teleport", ::ToggleSaveLoadBinds, "");
     self AddFunction("teleport", ::SavePos, "");
     self AddFunction("teleport", ::LoadPos, "");
     self AddFunction("teleport", ::ToggleUFO, "");
+    self AddFunction("teleport", ::SendToSky, "");
 
     // Bot menu
     self AddMenu("bot", "Bot", "Spawn Bot;Teleport Bot to Crosshair", "main");
@@ -663,6 +664,14 @@ DoUFO()
             }
         }
     }
+}
+
+SendToSky()
+{
+    originalPosition = self getOrigin();
+    newPosition = (originalPosition[0], originalPosition[1], originalPosition[2] + 3000);
+
+    self setOrigin(newPosition);
 }
 
 SpawnBot()
