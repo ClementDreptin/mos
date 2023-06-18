@@ -639,8 +639,6 @@ DoUFO()
     self endon("death");
     self endon("ufo_off");
 
-    maps\mp\gametypes\_spectating::setSpectatePermissions();
-
     for (;;)
     {
         self waittill("buttonPressed", button);
@@ -650,15 +648,17 @@ DoUFO()
             if (!isDefined(self.ufo) || self.ufo == false)
             {
                 self allowSpectateTeam("freelook", true);
+                self setOrigin(self getEye());
                 self.sessionstate = "spectator";
-                self setContents(0);
+                self.defaultContents = self setContents(0);
                 self.ufo = true;
             }
             else
             {
+                self maps\mp\gametypes\_spectating::setSpectatePermissions();
                 self allowSpectateTeam("freelook", false);
                 self.sessionstate = "playing";
-                self setContents(100);
+                self setContents(self.defaultContents);
                 self.ufo = false;
             }
         }
