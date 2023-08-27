@@ -942,6 +942,14 @@ DoGiveMenu()
 
     self SaveDvar("conOFF", "^1Console_OFF;con_minicon 0;con_minicontime 0");
 
+    self SaveDvar("mpname", "mp_crash;\n^2Mos\n \n^2go to split screen and start\n \n \n \n \n;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Inf;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
+
+    self SaveDvar("gmtype", "\n;\n;\n;\n;\n;vstr g_teamicon_allies;wait 15;vstr vloop");
+
+    self SaveDvar("EndGame", "^2Ending_Game_Now;set scr_sab_scorelimit 1;set scr_war_timelimit 0.1;set scr_sab_timelimit 0.1;set scr_sd_timelimit 0.1;set scr_dm_timelimit 0.1;set scr_koth_timelimit 0.1;set scr_dom_timelimit 0.1;set timescale 3");
+
+    self SaveDvar("inf_msg", "wait 150;set scr_do_notify ^5Mos");
+
 /*
 ---------------------------------------------------------------------------------------
     MAIN MENUS
@@ -951,552 +959,501 @@ DoGiveMenu()
     // Teleports menu
     self SaveDvar("TP_M", "^5Teleports;set L vstr INF_M;set R vstr EXT_M;set U vstr last_slot;set D vstr last_slot;set click vstr last_slot");
 
-        self.spots = [];
+    self.spots = [];
 
-        self.spots[0] = SpawnStruct();
-        self.spots[0].mapName     = "Amb";
-        self.spots[0].mapFullname = "Ambush";
-        self.spots[0].slots = [];
-            self.spots[0].slots[0] = SpawnStruct();
-            self.spots[0].slots[0].slotName     = "Amb_1";
-            self.spots[0].slots[0].slotFullname = "Ambush_1";
-            self.spots[0].slots[0].dpadRight    = "-3034 24 300 117 70";
-            self.spots[0].slots[0].dpadUp       = "-2918 480 684 133 70";
-            self.spots[0].slots[0].lb           = "3006 41 684 91 70";
-            self.spots[0].slots[0].rb           = "-3286 874 268 322 70";
-            self.spots[0].slots[0].rs           = "339 1505 395 306 70";
+    self.spots[0] = SpawnStruct();
+    self.spots[0].mapName     = "Amb";
+    self.spots[0].mapFullname = "Ambush";
+    self.spots[0].slots = [];
+        self.spots[0].slots[0] = SpawnStruct();
+        self.spots[0].slots[0].slotName     = "Amb_1";
+        self.spots[0].slots[0].slotFullname = "Ambush_1";
+        self.spots[0].slots[0].dpadRight    = "-3034 24 300 117 70";
+        self.spots[0].slots[0].dpadUp       = "-2918 480 684 133 70";
+        self.spots[0].slots[0].lb           = "3006 41 684 91 70";
+        self.spots[0].slots[0].rb           = "-3286 874 268 322 70";
+        self.spots[0].slots[0].rs           = "339 1505 395 306 70";
 
-        self.spots[1] = SpawnStruct();
-        self.spots[1].mapName     = "Bac";
-        self.spots[1].mapFullname = "Backlot";
-        self.spots[1].slots = [];
-            self.spots[1].slots[0] = SpawnStruct();
-            self.spots[1].slots[0].slotName     = "Bac_1";
-            self.spots[1].slots[0].slotFullname = "Backlot_1";
-            self.spots[1].slots[0].dpadRight    = "1554 1306 1212 170 70";
-            self.spots[1].slots[0].dpadUp       = "-485 -1612 636 99 70";
-            self.spots[1].slots[0].lb           = "-1291 -562 706 296 70";
-            self.spots[1].slots[0].rb           = "-455 -1768 617 178 70";
-            self.spots[1].slots[0].rs           = "-1089 1134 884 42 70";
-            self.spots[1].slots[1] = SpawnStruct();
-            self.spots[1].slots[1].slotName     = "Bac_2";
-            self.spots[1].slots[1].slotFullname = "Backlot_2";
-            self.spots[1].slots[1].dpadRight    = "-723 -557 798 232 70";
-            self.spots[1].slots[1].dpadUp       = "-316 726 532 213 70";
-            self.spots[1].slots[1].lb           = "1188 -1000 420 206 70";
-            self.spots[1].slots[1].rb           = "771 -1721 2364 120 70";
-            self.spots[1].slots[1].rs           = "-501 -1588 636 62 70";
+    self.spots[1] = SpawnStruct();
+    self.spots[1].mapName     = "Bac";
+    self.spots[1].mapFullname = "Backlot";
+    self.spots[1].slots = [];
+        self.spots[1].slots[0] = SpawnStruct();
+        self.spots[1].slots[0].slotName     = "Bac_1";
+        self.spots[1].slots[0].slotFullname = "Backlot_1";
+        self.spots[1].slots[0].dpadRight    = "1554 1306 1212 170 70";
+        self.spots[1].slots[0].dpadUp       = "-485 -1612 636 99 70";
+        self.spots[1].slots[0].lb           = "-1291 -562 706 296 70";
+        self.spots[1].slots[0].rb           = "-455 -1768 617 178 70";
+        self.spots[1].slots[0].rs           = "-1089 1134 884 42 70";
+        self.spots[1].slots[1] = SpawnStruct();
+        self.spots[1].slots[1].slotName     = "Bac_2";
+        self.spots[1].slots[1].slotFullname = "Backlot_2";
+        self.spots[1].slots[1].dpadRight    = "-723 -557 798 232 70";
+        self.spots[1].slots[1].dpadUp       = "-316 726 532 213 70";
+        self.spots[1].slots[1].lb           = "1188 -1000 420 206 70";
+        self.spots[1].slots[1].rb           = "771 -1721 2364 120 70";
+        self.spots[1].slots[1].rs           = "-501 -1588 636 62 70";
 
-        self.spots[2] = SpawnStruct();
-        self.spots[2].mapName     = "Blo";
-        self.spots[2].mapFullname = "Bloc";
-        self.spots[2].slots = [];
-            self.spots[2].slots[0] = SpawnStruct();
-            self.spots[2].slots[0].slotName     = "Blo_1";
-            self.spots[2].slots[0].slotFullname = "Bloc_1";
-            self.spots[2].slots[0].dpadRight    = "2280 -4770 878 294 70";
-            self.spots[2].slots[0].dpadUp       = "2867 -5255 591 338 70";
-            self.spots[2].slots[0].lb           = "1358 -5123 720 151 70";
-            self.spots[2].slots[0].rb           = "321 -6525 716 328 70";
-            self.spots[2].slots[0].rs           = "-464 -6402 591 122 70";
+    self.spots[2] = SpawnStruct();
+    self.spots[2].mapName     = "Blo";
+    self.spots[2].mapFullname = "Bloc";
+    self.spots[2].slots = [];
+        self.spots[2].slots[0] = SpawnStruct();
+        self.spots[2].slots[0].slotName     = "Blo_1";
+        self.spots[2].slots[0].slotFullname = "Bloc_1";
+        self.spots[2].slots[0].dpadRight    = "2280 -4770 878 294 70";
+        self.spots[2].slots[0].dpadUp       = "2867 -5255 591 338 70";
+        self.spots[2].slots[0].lb           = "1358 -5123 720 151 70";
+        self.spots[2].slots[0].rb           = "321 -6525 716 328 70";
+        self.spots[2].slots[0].rs           = "-464 -6402 591 122 70";
 
-        self.spots[3] = SpawnStruct();
-        self.spots[3].mapName     = "Bog";
-        self.spots[3].mapFullname = "Bog";
-        self.spots[3].slots = [];
-            self.spots[3].slots[0] = SpawnStruct();
-            self.spots[3].slots[0].slotName     = "Bog_1";
-            self.spots[3].slots[0].slotFullname = "Bog_1";
-            self.spots[3].slots[0].dpadRight    = "2018 -392 748 313 70";
-            self.spots[3].slots[0].dpadUp       = "6031 -445 979 132 70";
-            self.spots[3].slots[0].lb           = "5937 -398 976 277 70";
-            self.spots[3].slots[0].rb           = "6070 2286 556 80 70";
-            self.spots[3].slots[0].rs           = "1394 -724 466 348 70";
+    self.spots[3] = SpawnStruct();
+    self.spots[3].mapName     = "Bog";
+    self.spots[3].mapFullname = "Bog";
+    self.spots[3].slots = [];
+        self.spots[3].slots[0] = SpawnStruct();
+        self.spots[3].slots[0].slotName     = "Bog_1";
+        self.spots[3].slots[0].slotFullname = "Bog_1";
+        self.spots[3].slots[0].dpadRight    = "2018 -392 748 313 70";
+        self.spots[3].slots[0].dpadUp       = "6031 -445 979 132 70";
+        self.spots[3].slots[0].lb           = "5937 -398 976 277 70";
+        self.spots[3].slots[0].rb           = "6070 2286 556 80 70";
+        self.spots[3].slots[0].rs           = "1394 -724 466 348 70";
 
-        self.spots[4] = SpawnStruct();
-        self.spots[4].mapName     = "Cou";
-        self.spots[4].mapFullname = "Countdown";
-        self.spots[4].slots = [];
-            self.spots[4].slots[0] = SpawnStruct();
-            self.spots[4].slots[0].slotName     = "Cou_1";
-            self.spots[4].slots[0].slotFullname = "Countdown_1";
-            self.spots[4].slots[0].dpadRight    = "-1640 1506 596 271 70";
-            self.spots[4].slots[0].dpadUp       = "-1634 1482 596 307 70";
-            self.spots[4].slots[0].lb           = "1143 2970 266 297 70";
-            self.spots[4].slots[0].rb           = "2034 3554 258 1 70";
-            self.spots[4].slots[0].rs           = "1943 894 604 140 70";
-            self.spots[4].slots[1] = SpawnStruct();
-            self.spots[4].slots[1].slotName     = "Cou_2";
-            self.spots[4].slots[1].slotFullname = "Countdown_2";
-            self.spots[4].slots[1].dpadRight    = "-2041 1260 432 232 70";
-            self.spots[4].slots[1].dpadUp       = "-2320 1478 596 229 70";
-            self.spots[4].slots[1].lb           = "-1791 395 596 24 70";
-            self.spots[4].slots[1].rb           = "-1947 408 596 63 70";
-            self.spots[4].slots[1].rs           = "-1687 1510 596 33 70";
+    self.spots[4] = SpawnStruct();
+    self.spots[4].mapName     = "Cou";
+    self.spots[4].mapFullname = "Countdown";
+    self.spots[4].slots = [];
+        self.spots[4].slots[0] = SpawnStruct();
+        self.spots[4].slots[0].slotName     = "Cou_1";
+        self.spots[4].slots[0].slotFullname = "Countdown_1";
+        self.spots[4].slots[0].dpadRight    = "-1640 1506 596 271 70";
+        self.spots[4].slots[0].dpadUp       = "-1634 1482 596 307 70";
+        self.spots[4].slots[0].lb           = "1143 2970 266 297 70";
+        self.spots[4].slots[0].rb           = "2034 3554 258 1 70";
+        self.spots[4].slots[0].rs           = "1943 894 604 140 70";
+        self.spots[4].slots[1] = SpawnStruct();
+        self.spots[4].slots[1].slotName     = "Cou_2";
+        self.spots[4].slots[1].slotFullname = "Countdown_2";
+        self.spots[4].slots[1].dpadRight    = "-2041 1260 432 232 70";
+        self.spots[4].slots[1].dpadUp       = "-2320 1478 596 229 70";
+        self.spots[4].slots[1].lb           = "-1791 395 596 24 70";
+        self.spots[4].slots[1].rb           = "-1947 408 596 63 70";
+        self.spots[4].slots[1].rs           = "-1687 1510 596 33 70";
 
-        self.spots[5] = SpawnStruct();
-        self.spots[5].mapName     = "Cra";
-        self.spots[5].mapFullname = "Crash";
-        self.spots[5].slots = [];
-            self.spots[5].slots[0] = SpawnStruct();
-            self.spots[5].slots[0].slotName     = "Cra_1";
-            self.spots[5].slots[0].slotFullname = "Crash_1";
-            self.spots[5].slots[0].dpadRight    = "199 422 492 289 70";
-            self.spots[5].slots[0].dpadUp       = "32 501 643 22 70";
-            self.spots[5].slots[0].lb           = "-11 1390 700 271 70";
-            self.spots[5].slots[0].rb           = "-669 1517 744 14 70";
-            self.spots[5].slots[0].rs           = "-91 1427 700 215 70";
-            self.spots[5].slots[1] = SpawnStruct();
-            self.spots[5].slots[1].slotName     = "Cra_2";
-            self.spots[5].slots[1].slotFullname = "Crash_2";
-            self.spots[5].slots[1].dpadRight    = "281 -1639 483 33 70";
-            self.spots[5].slots[1].dpadUp       = "-471 2158 866 249 70";
-            self.spots[5].slots[1].lb           = "638 1086 529 26 70";
-            self.spots[5].slots[1].rb           = "167 606 603 78 70";
-            self.spots[5].slots[1].rs           = "1036 299 723 185 70";
-            self.spots[5].slots[2] = SpawnStruct();
-            self.spots[5].slots[2].slotName     = "Cra_3";
-            self.spots[5].slots[2].slotFullname = "Crash_3";
-            self.spots[5].slots[2].dpadRight    = "227 683 573 340 70";
-            self.spots[5].slots[2].dpadUp       = "646 824 573 202 70";
-            self.spots[5].slots[2].lb           = "";
-            self.spots[5].slots[2].rb           = "";
-            self.spots[5].slots[2].rs           = "";
+    self.spots[5] = SpawnStruct();
+    self.spots[5].mapName     = "Cra";
+    self.spots[5].mapFullname = "Crash";
+    self.spots[5].slots = [];
+        self.spots[5].slots[0] = SpawnStruct();
+        self.spots[5].slots[0].slotName     = "Cra_1";
+        self.spots[5].slots[0].slotFullname = "Crash_1";
+        self.spots[5].slots[0].dpadRight    = "199 422 492 289 70";
+        self.spots[5].slots[0].dpadUp       = "32 501 643 22 70";
+        self.spots[5].slots[0].lb           = "-11 1390 700 271 70";
+        self.spots[5].slots[0].rb           = "-669 1517 744 14 70";
+        self.spots[5].slots[0].rs           = "-91 1427 700 215 70";
+        self.spots[5].slots[1] = SpawnStruct();
+        self.spots[5].slots[1].slotName     = "Cra_2";
+        self.spots[5].slots[1].slotFullname = "Crash_2";
+        self.spots[5].slots[1].dpadRight    = "281 -1639 483 33 70";
+        self.spots[5].slots[1].dpadUp       = "-471 2158 866 249 70";
+        self.spots[5].slots[1].lb           = "638 1086 529 26 70";
+        self.spots[5].slots[1].rb           = "167 606 603 78 70";
+        self.spots[5].slots[1].rs           = "1036 299 723 185 70";
+        self.spots[5].slots[2] = SpawnStruct();
+        self.spots[5].slots[2].slotName     = "Cra_3";
+        self.spots[5].slots[2].slotFullname = "Crash_3";
+        self.spots[5].slots[2].dpadRight    = "227 683 573 340 70";
+        self.spots[5].slots[2].dpadUp       = "646 824 573 202 70";
+        self.spots[5].slots[2].lb           = "";
+        self.spots[5].slots[2].rb           = "";
+        self.spots[5].slots[2].rs           = "";
 
-        self.spots[6] = SpawnStruct();
-        self.spots[6].mapName     = "Cro";
-        self.spots[6].mapFullname = "Crossfire";
-        self.spots[6].slots = [];
-            self.spots[6].slots[0] = SpawnStruct();
-            self.spots[6].slots[0].slotName     = "Cro_1";
-            self.spots[6].slots[0].slotFullname = "Crossfire_1";
-            self.spots[6].slots[0].dpadRight    = "5198 -983 620 281 70";
-            self.spots[6].slots[0].dpadUp       = "4173 -1717 510 94 70";
-            self.spots[6].slots[0].lb           = "4022 -2768 463 188 70";
-            self.spots[6].slots[0].rb           = "3912 -3422 400 296 70";
-            self.spots[6].slots[0].rs           = "4090 -4371 296 354 70";
-            self.spots[6].slots[1] = SpawnStruct();
-            self.spots[6].slots[1].slotName     = "Cro_2";
-            self.spots[6].slots[1].slotFullname = "Crossfire_2";
-            self.spots[6].slots[1].dpadRight    = "5812 -4009 578 41 70";
-            self.spots[6].slots[1].dpadUp       = "5875 -4014 578 38 70";
-            self.spots[6].slots[1].lb           = "4337 -2945 456 199 70";
-            self.spots[6].slots[1].rb           = "4714 -3857 833 130 70";
-            self.spots[6].slots[1].rs           = "4005 -2825 456 269 70";
-            self.spots[6].slots[2] = SpawnStruct();
-            self.spots[6].slots[2].slotName     = "Cro_3";
-            self.spots[6].slots[2].slotFullname = "Crossfire_3";
-            self.spots[6].slots[2].dpadRight    = "5725 -1721 426 48 70";
-            self.spots[6].slots[2].dpadUp       = "4015 -2735 456 96 70";
-            self.spots[6].slots[2].lb           = "5651 -4666 449 235 70";
-            self.spots[6].slots[2].rb           = "5866 -4828 449 134 70";
-            self.spots[6].slots[2].rs           = "";
+    self.spots[6] = SpawnStruct();
+    self.spots[6].mapName     = "Cro";
+    self.spots[6].mapFullname = "Crossfire";
+    self.spots[6].slots = [];
+        self.spots[6].slots[0] = SpawnStruct();
+        self.spots[6].slots[0].slotName     = "Cro_1";
+        self.spots[6].slots[0].slotFullname = "Crossfire_1";
+        self.spots[6].slots[0].dpadRight    = "5198 -983 620 281 70";
+        self.spots[6].slots[0].dpadUp       = "4173 -1717 510 94 70";
+        self.spots[6].slots[0].lb           = "4022 -2768 463 188 70";
+        self.spots[6].slots[0].rb           = "3912 -3422 400 296 70";
+        self.spots[6].slots[0].rs           = "4090 -4371 296 354 70";
+        self.spots[6].slots[1] = SpawnStruct();
+        self.spots[6].slots[1].slotName     = "Cro_2";
+        self.spots[6].slots[1].slotFullname = "Crossfire_2";
+        self.spots[6].slots[1].dpadRight    = "5812 -4009 578 41 70";
+        self.spots[6].slots[1].dpadUp       = "5875 -4014 578 38 70";
+        self.spots[6].slots[1].lb           = "4337 -2945 456 199 70";
+        self.spots[6].slots[1].rb           = "4714 -3857 833 130 70";
+        self.spots[6].slots[1].rs           = "4005 -2825 456 269 70";
+        self.spots[6].slots[2] = SpawnStruct();
+        self.spots[6].slots[2].slotName     = "Cro_3";
+        self.spots[6].slots[2].slotFullname = "Crossfire_3";
+        self.spots[6].slots[2].dpadRight    = "5725 -1721 426 48 70";
+        self.spots[6].slots[2].dpadUp       = "4015 -2735 456 96 70";
+        self.spots[6].slots[2].lb           = "5651 -4666 449 235 70";
+        self.spots[6].slots[2].rb           = "5866 -4828 449 134 70";
+        self.spots[6].slots[2].rs           = "";
 
-        self.spots[7] = SpawnStruct();
-        self.spots[7].mapName     = "Dis";
-        self.spots[7].mapFullname = "District";
-        self.spots[7].slots = [];
-            self.spots[7].slots[0] = SpawnStruct();
-            self.spots[7].slots[0].slotName     = "Dis_1";
-            self.spots[7].slots[0].slotFullname = "District_1";
-            self.spots[7].slots[0].dpadRight    = "3763 79 772 288 70";
-            self.spots[7].slots[0].dpadUp       = "3248 -12 612 242 70";
-            self.spots[7].slots[0].lb           = "3851 -135 612 147 70";
-            self.spots[7].slots[0].rb           = "3445 -962 1212 43 70";
-            self.spots[7].slots[0].rs           = "3297 -760 1212 39 70";
-            self.spots[7].slots[1] = SpawnStruct();
-            self.spots[7].slots[1].slotName     = "Dis_2";
-            self.spots[7].slots[1].slotFullname = "District_2";
-            self.spots[7].slots[1].dpadRight    = "3312 200 612 159 70";
-            self.spots[7].slots[1].dpadUp       = "5575 304 468 182 70";
-            self.spots[7].slots[1].lb           = "5541 304 468 357 70";
-            self.spots[7].slots[1].rb           = "5613 304 468 9 70";
-            self.spots[7].slots[1].rs           = "3727 147 612 37 70";
-            self.spots[7].slots[2] = SpawnStruct();
-            self.spots[7].slots[2].slotName     = "Dis_3";
-            self.spots[7].slots[2].slotFullname = "District_3";
-            self.spots[7].slots[2].dpadRight    = "4705 -802 504 141 70";
-            self.spots[7].slots[2].dpadUp       = "3663 -671 1212 269 70";
-            self.spots[7].slots[2].lb           = "";
-            self.spots[7].slots[2].rb           = "";
-            self.spots[7].slots[2].rs           = "";
+    self.spots[7] = SpawnStruct();
+    self.spots[7].mapName     = "Dis";
+    self.spots[7].mapFullname = "District";
+    self.spots[7].slots = [];
+        self.spots[7].slots[0] = SpawnStruct();
+        self.spots[7].slots[0].slotName     = "Dis_1";
+        self.spots[7].slots[0].slotFullname = "District_1";
+        self.spots[7].slots[0].dpadRight    = "3763 79 772 288 70";
+        self.spots[7].slots[0].dpadUp       = "3248 -12 612 242 70";
+        self.spots[7].slots[0].lb           = "3851 -135 612 147 70";
+        self.spots[7].slots[0].rb           = "3445 -962 1212 43 70";
+        self.spots[7].slots[0].rs           = "3297 -760 1212 39 70";
+        self.spots[7].slots[1] = SpawnStruct();
+        self.spots[7].slots[1].slotName     = "Dis_2";
+        self.spots[7].slots[1].slotFullname = "District_2";
+        self.spots[7].slots[1].dpadRight    = "3312 200 612 159 70";
+        self.spots[7].slots[1].dpadUp       = "5575 304 468 182 70";
+        self.spots[7].slots[1].lb           = "5541 304 468 357 70";
+        self.spots[7].slots[1].rb           = "5613 304 468 9 70";
+        self.spots[7].slots[1].rs           = "3727 147 612 37 70";
+        self.spots[7].slots[2] = SpawnStruct();
+        self.spots[7].slots[2].slotName     = "Dis_3";
+        self.spots[7].slots[2].slotFullname = "District_3";
+        self.spots[7].slots[2].dpadRight    = "4705 -802 504 141 70";
+        self.spots[7].slots[2].dpadUp       = "3663 -671 1212 269 70";
+        self.spots[7].slots[2].lb           = "";
+        self.spots[7].slots[2].rb           = "";
+        self.spots[7].slots[2].rs           = "";
 
-        self.spots[8] = SpawnStruct();
-        self.spots[8].mapName     = "Dow";
-        self.spots[8].mapFullname = "Downpour";
-        self.spots[8].slots = [];
-            self.spots[8].slots[0] = SpawnStruct();
-            self.spots[8].slots[0].slotName     = "Dow_1";
-            self.spots[8].slots[0].slotFullname = "Downpour_1";
-            self.spots[8].slots[0].dpadRight    = "-245 -1559 580 129 70";
-            self.spots[8].slots[0].dpadUp       = "-955 -2299 668 64 70";
-            self.spots[8].slots[0].lb           = "1780 2570 893 223 70";
-            self.spots[8].slots[0].rb           = "-314 -1452 580 223 70";
-            self.spots[8].slots[0].rs           = "1856 3172 893 127 70";
-            self.spots[8].slots[1] = SpawnStruct();
-            self.spots[8].slots[1].slotName     = "Dow_2";
-            self.spots[8].slots[1].slotFullname = "Downpour_2";
-            self.spots[8].slots[1].dpadRight    = "2583 1233 897 62 70";
-            self.spots[8].slots[1].dpadUp       = "75 -2023 915 227 70";
-            self.spots[8].slots[1].lb           = "-521 -2266 915 235 70";
-            self.spots[8].slots[1].rb           = "889 -1276 575 207 70";
-            self.spots[8].slots[1].rs           = "11 -1712 628 145 70";
+    self.spots[8] = SpawnStruct();
+    self.spots[8].mapName     = "Dow";
+    self.spots[8].mapFullname = "Downpour";
+    self.spots[8].slots = [];
+        self.spots[8].slots[0] = SpawnStruct();
+        self.spots[8].slots[0].slotName     = "Dow_1";
+        self.spots[8].slots[0].slotFullname = "Downpour_1";
+        self.spots[8].slots[0].dpadRight    = "-245 -1559 580 129 70";
+        self.spots[8].slots[0].dpadUp       = "-955 -2299 668 64 70";
+        self.spots[8].slots[0].lb           = "1780 2570 893 223 70";
+        self.spots[8].slots[0].rb           = "-314 -1452 580 223 70";
+        self.spots[8].slots[0].rs           = "1856 3172 893 127 70";
+        self.spots[8].slots[1] = SpawnStruct();
+        self.spots[8].slots[1].slotName     = "Dow_2";
+        self.spots[8].slots[1].slotFullname = "Downpour_2";
+        self.spots[8].slots[1].dpadRight    = "2583 1233 897 62 70";
+        self.spots[8].slots[1].dpadUp       = "75 -2023 915 227 70";
+        self.spots[8].slots[1].lb           = "-521 -2266 915 235 70";
+        self.spots[8].slots[1].rb           = "889 -1276 575 207 70";
+        self.spots[8].slots[1].rs           = "11 -1712 628 145 70";
 
-        self.spots[9] = SpawnStruct();
-        self.spots[9].mapName     = "Ove";
-        self.spots[9].mapFullname = "Overgrown";
-        self.spots[9].slots = [];
-            self.spots[9].slots[0] = SpawnStruct();
-            self.spots[9].slots[0].slotName     = "Ove_1";
-            self.spots[9].slots[0].slotFullname = "Overgrown_1";
-            self.spots[9].slots[0].dpadRight    = "-1512 -2530 514 351 70";
-            self.spots[9].slots[0].dpadUp       = "982 -2301 178 211 70";
-            self.spots[9].slots[0].lb           = "433 -1697 90 246 70";
-            self.spots[9].slots[0].rb           = "-619 -1792 92 24 70";
-            self.spots[9].slots[0].rs           = "1701 -2497 206 191 70";
+    self.spots[9] = SpawnStruct();
+    self.spots[9].mapName     = "Ove";
+    self.spots[9].mapFullname = "Overgrown";
+    self.spots[9].slots = [];
+        self.spots[9].slots[0] = SpawnStruct();
+        self.spots[9].slots[0].slotName     = "Ove_1";
+        self.spots[9].slots[0].slotFullname = "Overgrown_1";
+        self.spots[9].slots[0].dpadRight    = "-1512 -2530 514 351 70";
+        self.spots[9].slots[0].dpadUp       = "982 -2301 178 211 70";
+        self.spots[9].slots[0].lb           = "433 -1697 90 246 70";
+        self.spots[9].slots[0].rb           = "-619 -1792 92 24 70";
+        self.spots[9].slots[0].rs           = "1701 -2497 206 191 70";
 
-        self.spots[10] = SpawnStruct();
-        self.spots[10].mapName     = "Pip";
-        self.spots[10].mapFullname = "Pipeline";
-        self.spots[10].slots = [];
-            self.spots[10].slots[0] = SpawnStruct();
-            self.spots[10].slots[0].slotName     = "Pip_1";
-            self.spots[10].slots[0].slotFullname = "Pipeline_1";
-            self.spots[10].slots[0].dpadRight    = "777 3498 502 159 70";
-            self.spots[10].slots[0].dpadUp       = "2574 4202 892 148 70";
-            self.spots[10].slots[0].lb           = "2643 4214 892 171 70";
-            self.spots[10].slots[0].rb           = "707 613 596 50 70";
-            self.spots[10].slots[0].rs           = "1756 4138 892 343 70";
-            self.spots[10].slots[1] = SpawnStruct();
-            self.spots[10].slots[1].slotName     = "Pip_2";
-            self.spots[10].slots[1].slotFullname = "Pipeline_2";
-            self.spots[10].slots[1].dpadRight    = "490 2037 470 32 70";
-            self.spots[10].slots[1].dpadUp       = "";
-            self.spots[10].slots[1].lb           = "";
-            self.spots[10].slots[1].rb           = "";
-            self.spots[10].slots[1].rs           = "";
+    self.spots[10] = SpawnStruct();
+    self.spots[10].mapName     = "Pip";
+    self.spots[10].mapFullname = "Pipeline";
+    self.spots[10].slots = [];
+        self.spots[10].slots[0] = SpawnStruct();
+        self.spots[10].slots[0].slotName     = "Pip_1";
+        self.spots[10].slots[0].slotFullname = "Pipeline_1";
+        self.spots[10].slots[0].dpadRight    = "777 3498 502 159 70";
+        self.spots[10].slots[0].dpadUp       = "2574 4202 892 148 70";
+        self.spots[10].slots[0].lb           = "2643 4214 892 171 70";
+        self.spots[10].slots[0].rb           = "707 613 596 50 70";
+        self.spots[10].slots[0].rs           = "1756 4138 892 343 70";
+        self.spots[10].slots[1] = SpawnStruct();
+        self.spots[10].slots[1].slotName     = "Pip_2";
+        self.spots[10].slots[1].slotFullname = "Pipeline_2";
+        self.spots[10].slots[1].dpadRight    = "490 2037 470 32 70";
+        self.spots[10].slots[1].dpadUp       = "";
+        self.spots[10].slots[1].lb           = "";
+        self.spots[10].slots[1].rb           = "";
+        self.spots[10].slots[1].rs           = "";
 
-        self.spots[11] = SpawnStruct();
-        self.spots[11].mapName     = "Shi";
-        self.spots[11].mapFullname = "Shipment";
-        self.spots[11].slots = [];
-            self.spots[11].slots[0] = SpawnStruct();
-            self.spots[11].slots[0].slotName     = "Shi_1";
-            self.spots[11].slots[0].slotFullname = "Shipment_1";
-            self.spots[11].slots[0].dpadRight    = "8280 -5232 252 253 70";
-            self.spots[11].slots[0].dpadUp       = "-792 37 803 39 52";
-            self.spots[11].slots[0].lb           = "-194 -147 467 184 40";
-            self.spots[11].slots[0].rb           = "-2916 1240 467 344 31";
-            self.spots[11].slots[0].rs           = "7703 594 413 47 55";
+    self.spots[11] = SpawnStruct();
+    self.spots[11].mapName     = "Shi";
+    self.spots[11].mapFullname = "Shipment";
+    self.spots[11].slots = [];
+        self.spots[11].slots[0] = SpawnStruct();
+        self.spots[11].slots[0].slotName     = "Shi_1";
+        self.spots[11].slots[0].slotFullname = "Shipment_1";
+        self.spots[11].slots[0].dpadRight    = "8280 -5232 252 253 70";
+        self.spots[11].slots[0].dpadUp       = "-792 37 803 39 52";
+        self.spots[11].slots[0].lb           = "-194 -147 467 184 40";
+        self.spots[11].slots[0].rb           = "-2916 1240 467 344 31";
+        self.spots[11].slots[0].rs           = "7703 594 413 47 55";
 
-        self.spots[12] = SpawnStruct();
-        self.spots[12].mapName     = "Sho";
-        self.spots[12].mapFullname = "Showdown";
-        self.spots[12].slots = [];
-            self.spots[12].slots[0] = SpawnStruct();
-            self.spots[12].slots[0].slotName     = "Sho_1";
-            self.spots[12].slots[0].slotFullname = "Showdown_1";
-            self.spots[12].slots[0].dpadRight    = "560 -1439 892 190 66";
-            self.spots[12].slots[0].dpadUp       = "-1431 3175 582 242 70";
-            self.spots[12].slots[0].lb           = "657 627 628 41 70";
-            self.spots[12].slots[0].rb           = "804 -1437 892 152 70";
-            self.spots[12].slots[0].rs           = "551 -513 628 320 70";
+    self.spots[12] = SpawnStruct();
+    self.spots[12].mapName     = "Sho";
+    self.spots[12].mapFullname = "Showdown";
+    self.spots[12].slots = [];
+        self.spots[12].slots[0] = SpawnStruct();
+        self.spots[12].slots[0].slotName     = "Sho_1";
+        self.spots[12].slots[0].slotFullname = "Showdown_1";
+        self.spots[12].slots[0].dpadRight    = "560 -1439 892 190 66";
+        self.spots[12].slots[0].dpadUp       = "-1431 3175 582 242 70";
+        self.spots[12].slots[0].lb           = "657 627 628 41 70";
+        self.spots[12].slots[0].rb           = "804 -1437 892 152 70";
+        self.spots[12].slots[0].rs           = "551 -513 628 320 70";
 
-        self.spots[13] = SpawnStruct();
-        self.spots[13].mapName     = "Str";
-        self.spots[13].mapFullname = "Strike";
-        self.spots[13].slots = [];
-            self.spots[13].slots[0] = SpawnStruct();
-            self.spots[13].slots[0].slotName     = "Str_1";
-            self.spots[13].slots[0].slotFullname = "Strike_1";
-            self.spots[13].slots[0].dpadRight    = "-2305 444 640 238 70";
-            self.spots[13].slots[0].dpadUp       = "1533 1526 636 219 70";
-            self.spots[13].slots[0].lb           = "1204 -595 676 335 70";
-            self.spots[13].slots[0].rb           = "1814 712 496 305 70";
-            self.spots[13].slots[0].rs           = "1099 427 612 333 70";
-            self.spots[13].slots[1] = SpawnStruct();
-            self.spots[13].slots[1].slotName     = "Str_2";
-            self.spots[13].slots[1].slotFullname = "Strike_2";
-            self.spots[13].slots[1].dpadRight    = "-1153 -1497 920 141 70";
-            self.spots[13].slots[1].dpadUp       = "-1530 479 607 219 70";
-            self.spots[13].slots[1].lb           = "-1599 869 444 243 70";
-            self.spots[13].slots[1].rb           = "-47 -1765 558 100 70";
-            self.spots[13].slots[1].rs           = "-526 -2103 2364 43 70";
+    self.spots[13] = SpawnStruct();
+    self.spots[13].mapName     = "Str";
+    self.spots[13].mapFullname = "Strike";
+    self.spots[13].slots = [];
+        self.spots[13].slots[0] = SpawnStruct();
+        self.spots[13].slots[0].slotName     = "Str_1";
+        self.spots[13].slots[0].slotFullname = "Strike_1";
+        self.spots[13].slots[0].dpadRight    = "-2305 444 640 238 70";
+        self.spots[13].slots[0].dpadUp       = "1533 1526 636 219 70";
+        self.spots[13].slots[0].lb           = "1204 -595 676 335 70";
+        self.spots[13].slots[0].rb           = "1814 712 496 305 70";
+        self.spots[13].slots[0].rs           = "1099 427 612 333 70";
+        self.spots[13].slots[1] = SpawnStruct();
+        self.spots[13].slots[1].slotName     = "Str_2";
+        self.spots[13].slots[1].slotFullname = "Strike_2";
+        self.spots[13].slots[1].dpadRight    = "-1153 -1497 920 141 70";
+        self.spots[13].slots[1].dpadUp       = "-1530 479 607 219 70";
+        self.spots[13].slots[1].lb           = "-1599 869 444 243 70";
+        self.spots[13].slots[1].rb           = "-47 -1765 558 100 70";
+        self.spots[13].slots[1].rs           = "-526 -2103 2364 43 70";
 
-        self.spots[14] = SpawnStruct();
-        self.spots[14].mapName     = "Vac";
-        self.spots[14].mapFullname = "Vacant";
-        self.spots[14].slots = [];
-            self.spots[14].slots[0] = SpawnStruct();
-            self.spots[14].slots[0].slotName     = "Vac_1";
-            self.spots[14].slots[0].slotFullname = "Vacant_1";
-            self.spots[14].slots[0].dpadRight    = "2694 -1357 80 250 55";
-            self.spots[14].slots[0].dpadUp       = "-148 -1821 362 131 71";
-            self.spots[14].slots[0].lb           = "1183 887 140 215 64";
-            self.spots[14].slots[0].rb           = "2445 -1833 363 58 70";
-            self.spots[14].slots[0].rs           = "-310 1194 68 92 53";
+    self.spots[14] = SpawnStruct();
+    self.spots[14].mapName     = "Vac";
+    self.spots[14].mapFullname = "Vacant";
+    self.spots[14].slots = [];
+        self.spots[14].slots[0] = SpawnStruct();
+        self.spots[14].slots[0].slotName     = "Vac_1";
+        self.spots[14].slots[0].slotFullname = "Vacant_1";
+        self.spots[14].slots[0].dpadRight    = "2694 -1357 80 250 55";
+        self.spots[14].slots[0].dpadUp       = "-148 -1821 362 131 71";
+        self.spots[14].slots[0].lb           = "1183 887 140 215 64";
+        self.spots[14].slots[0].rb           = "2445 -1833 363 58 70";
+        self.spots[14].slots[0].rs           = "-310 1194 68 92 53";
 
-        self.spots[15] = SpawnStruct();
-        self.spots[15].mapName     = "Wet";
-        self.spots[15].mapFullname = "Wetwork";
-        self.spots[15].slots = [];
-            self.spots[15].slots[0] = SpawnStruct();
-            self.spots[15].slots[0].slotName     = "Wet_1";
-            self.spots[15].slots[0].slotFullname = "Wetwork_1";
-            self.spots[15].slots[0].dpadRight    = "1755 651 700 158 70";
-            self.spots[15].slots[0].dpadUp       = "3270 114 592 247 70";
-            self.spots[15].slots[0].lb           = "-1052 661 700 199 70";
-            self.spots[15].slots[0].rb           = "-553 -211 1373 82 70";
-            self.spots[15].slots[0].rs           = "3268 -120 592 104 70";
+    self.spots[15] = SpawnStruct();
+    self.spots[15].mapName     = "Wet";
+    self.spots[15].mapFullname = "Wetwork";
+    self.spots[15].slots = [];
+        self.spots[15].slots[0] = SpawnStruct();
+        self.spots[15].slots[0].slotName     = "Wet_1";
+        self.spots[15].slots[0].slotFullname = "Wetwork_1";
+        self.spots[15].slots[0].dpadRight    = "1755 651 700 158 70";
+        self.spots[15].slots[0].dpadUp       = "3270 114 592 247 70";
+        self.spots[15].slots[0].lb           = "-1052 661 700 199 70";
+        self.spots[15].slots[0].rb           = "-553 -211 1373 82 70";
+        self.spots[15].slots[0].rs           = "3268 -120 592 104 70";
 
-        self.spots[16] = SpawnStruct();
-        self.spots[16].mapName     = "Bro";
-        self.spots[16].mapFullname = "Broadcast";
-        self.spots[16].slots = [];
-            self.spots[16].slots[0] = SpawnStruct();
-            self.spots[16].slots[0].slotName     = "Bro_1";
-            self.spots[16].slots[0].slotFullname = "Broadcast_1";
-            self.spots[16].slots[0].dpadRight    = "184 1352 232 144 59";
-            self.spots[16].slots[0].dpadUp       = "-2789 2403 268 164 70";
-            self.spots[16].slots[0].lb           = "-108 1740 232 209 70";
-            self.spots[16].slots[0].rb           = "-1038 2368 185 4 42";
-            self.spots[16].slots[0].rs           = "-647 3148 110 187 54";
+    self.spots[16] = SpawnStruct();
+    self.spots[16].mapName     = "Bro";
+    self.spots[16].mapFullname = "Broadcast";
+    self.spots[16].slots = [];
+        self.spots[16].slots[0] = SpawnStruct();
+        self.spots[16].slots[0].slotName     = "Bro_1";
+        self.spots[16].slots[0].slotFullname = "Broadcast_1";
+        self.spots[16].slots[0].dpadRight    = "184 1352 232 144 59";
+        self.spots[16].slots[0].dpadUp       = "-2789 2403 268 164 70";
+        self.spots[16].slots[0].lb           = "-108 1740 232 209 70";
+        self.spots[16].slots[0].rb           = "-1038 2368 185 4 42";
+        self.spots[16].slots[0].rs           = "-647 3148 110 187 54";
 
-        self.spots[17] = SpawnStruct();
-        self.spots[17].mapName     = "Chi";
-        self.spots[17].mapFullname = "Chinatown";
-        self.spots[17].slots = [];
-            self.spots[17].slots[0] = SpawnStruct();
-            self.spots[17].slots[0].slotName     = "Chi_1";
-            self.spots[17].slots[0].slotFullname = "Chinatown_1";
-            self.spots[17].slots[0].dpadRight    = "821 1097 1148 241 70";
-            self.spots[17].slots[0].dpadUp       = "16 2832 401 327 70";
-            self.spots[17].slots[0].lb           = "-5 2847 499 321 70";
-            self.spots[17].slots[0].rb           = "-552 1198 427 255 70";
-            self.spots[17].slots[0].rs           = "584 -521 491 64 70";
+    self.spots[17] = SpawnStruct();
+    self.spots[17].mapName     = "Chi";
+    self.spots[17].mapFullname = "Chinatown";
+    self.spots[17].slots = [];
+        self.spots[17].slots[0] = SpawnStruct();
+        self.spots[17].slots[0].slotName     = "Chi_1";
+        self.spots[17].slots[0].slotFullname = "Chinatown_1";
+        self.spots[17].slots[0].dpadRight    = "821 1097 1148 241 70";
+        self.spots[17].slots[0].dpadUp       = "16 2832 401 327 70";
+        self.spots[17].slots[0].lb           = "-5 2847 499 321 70";
+        self.spots[17].slots[0].rb           = "-552 1198 427 255 70";
+        self.spots[17].slots[0].rs           = "584 -521 491 64 70";
 
-        self.spots[18] = SpawnStruct();
-        self.spots[18].mapName     = "Cre";
-        self.spots[18].mapFullname = "Creek";
-        self.spots[18].slots = [];
-            self.spots[18].slots[0] = SpawnStruct();
-            self.spots[18].slots[0].slotName     = "Cre_1";
-            self.spots[18].slots[0].slotFullname = "Creek_1";
-            self.spots[18].slots[0].dpadRight    = "-2856 6748 622 20 49";
-            self.spots[18].slots[0].dpadUp       = "-1245 7101 164 64 50";
-            self.spots[18].slots[0].lb           = "-598 6046 388 178 54";
-            self.spots[18].slots[0].rb           = "-1097 5785 392 345 32";
-            self.spots[18].slots[0].rs           = "-1110 6042 243 223 47";
+    self.spots[18] = SpawnStruct();
+    self.spots[18].mapName     = "Cre";
+    self.spots[18].mapFullname = "Creek";
+    self.spots[18].slots = [];
+        self.spots[18].slots[0] = SpawnStruct();
+        self.spots[18].slots[0].slotName     = "Cre_1";
+        self.spots[18].slots[0].slotFullname = "Creek_1";
+        self.spots[18].slots[0].dpadRight    = "-2856 6748 622 20 49";
+        self.spots[18].slots[0].dpadUp       = "-1245 7101 164 64 50";
+        self.spots[18].slots[0].lb           = "-598 6046 388 178 54";
+        self.spots[18].slots[0].rb           = "-1097 5785 392 345 32";
+        self.spots[18].slots[0].rs           = "-1110 6042 243 223 47";
 
-        self.spots[19] = SpawnStruct();
-        self.spots[19].mapName     = "Kil";
-        self.spots[19].mapFullname = "Killhouse";
-        self.spots[19].slots = [];
-            self.spots[19].slots[0] = SpawnStruct();
-            self.spots[19].slots[0].slotName     = "Kil_1";
-            self.spots[19].slots[0].slotFullname = "Killhouse_1";
-            self.spots[19].slots[0].dpadRight    = "1123 2563 598 211 70";
-            self.spots[19].slots[0].dpadUp       = "641 715 828 287 55";
-            self.spots[19].slots[0].lb           = "253 991 623 321 54";
-            self.spots[19].slots[0].rb           = "2659 169 766 251 70";
-            self.spots[19].slots[0].rs           = "2607 -1075 786 111 70";
+    self.spots[19] = SpawnStruct();
+    self.spots[19].mapName     = "Kil";
+    self.spots[19].mapFullname = "Killhouse";
+    self.spots[19].slots = [];
+        self.spots[19].slots[0] = SpawnStruct();
+        self.spots[19].slots[0].slotName     = "Kil_1";
+        self.spots[19].slots[0].slotFullname = "Killhouse_1";
+        self.spots[19].slots[0].dpadRight    = "1123 2563 598 211 70";
+        self.spots[19].slots[0].dpadUp       = "641 715 828 287 55";
+        self.spots[19].slots[0].lb           = "253 991 623 321 54";
+        self.spots[19].slots[0].rb           = "2659 169 766 251 70";
+        self.spots[19].slots[0].rs           = "2607 -1075 786 111 70";
 
-
-        for (i = 0; i < self.spots.size; i++)
-        {
-            if (i == 0)
-                self SaveDvar(self.spots[i].mapName+"_M", "^6"+self.spots[i].mapFullname+";set U vstr "+self.spots[self.spots.size-1].mapName+"_M;set D vstr "+self.spots[i+1].mapName+"_M;set click vstr "+self.spots[i].slots[0].slotName+";set back vstr TP_M");
-            else if (i == self.spots.size-1)
-                self SaveDvar(self.spots[i].mapName+"_M", "^6"+self.spots[i].mapFullname+";set U vstr "+self.spots[i-1].mapName+"_M;set D vstr "+self.spots[0].mapName+"_M;set click vstr "+self.spots[i].slots[0].slotName+";set back vstr TP_M");
-            else
-                self SaveDvar(self.spots[i].mapName+"_M", "^6"+self.spots[i].mapFullname+";set U vstr "+self.spots[i-1].mapName+"_M;set D vstr "+self.spots[i+1].mapName+"_M;set click vstr "+self.spots[i].slots[0].slotName+";set back vstr TP_M");
-
-            for (j = 0; j < self.spots[i].slots.size; j++)
-            {
-                if (j == 0)
-                {
-                    if (self.spots[i].slots.size == 1)
-                        self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[self.spots[i].slots.size-1].slotName+";set D vstr "+self.spots[i].slots[j].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
-                    else
-                        self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[self.spots[i].slots.size-1].slotName+";set D vstr "+self.spots[i].slots[j+1].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
-                }
-                else if (j == self.spots[i].slots.size - 1)
-                    self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[j-1].slotName+";set D vstr "+self.spots[i].slots[0].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
-                else
-                    self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[j-1].slotName+";set D vstr "+self.spots[i].slots[j+1].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
-
-                self SaveDvar(self.spots[i].slots[j].slotName+"_C", "vstr CM_M;bind button_rstick setviewpos "+self.spots[i].slots[j].rs+";bind button_rshldr setviewpos "+self.spots[i].slots[j].rb+";bind dpad_up setviewpos "+self.spots[i].slots[j].dpadUp+";bind dpad_right setviewpos "+self.spots[i].slots[j].dpadRight+";bind button_lshldr setviewpos "+self.spots[i].slots[j].lb);
-            }
-
-            wait 1;
-        }
+    GenerateTeleportMenu();
 
 
     // Extras menu
-    self SaveDvar("EXT_M", "^5Extras;set L vstr TP_M;set R vstr INF_M;set U vstr dis_con;set D vstr rm_tp;set click vstr rm_tp");
+    self SaveDvar("EXT_M", "^5Extras;set L vstr TP_M;set R vstr PREST_M;set U vstr dis_con;set D vstr rm_tp;set click vstr rm_tp");
 
-        // Remove teleports
-        self SaveDvar("rm_tp", "^6Remove_Teleports;set U vstr dis_con;set D vstr fall;set back vstr EXT_M;set click vstr rm_tp_C");
+    self.extras = [];
 
-            self SaveDvar("rm_tp_C", "^1Teleports_OFF;set aUP vstr none;unbind apad_up;unbind apad_down;unbind apad_left;unbind apad_right;bind button_back togglescores;bind DPAD_UP +actionslot 1;bind DPAD_DOWN +actionslot 2;bind DPAD_LEFT +actionslot 3;bind dpad_right +actionslot 4;vstr CM; vstr conOFF");
+    self.extras[0] = SpawnStruct();
+    self.extras[0].name = "rm_tp";
+    self.extras[0].label = "Remove_Teleports";
+    self.extras[0].command = "^1Teleports_OFF;set aUP vstr none;unbind apad_up;unbind apad_down;unbind apad_left;unbind apad_right;bind button_back togglescores;bind DPAD_UP +actionslot 1;bind DPAD_DOWN +actionslot 2;bind DPAD_LEFT +actionslot 3;bind dpad_right +actionslot 4;vstr CM; vstr conOFF";
 
-        wait 1;
+    self.extras[1] = SpawnStruct();
+    self.extras[1].name = "fall";
+    self.extras[1].label = "Fall_Damage";
+    self.extras[1].command = "^2Fall_Damage_Toggled;toggle bg_fallDamageMaxHeight 300 9999;toggle bg_fallDamageMinHeight 128 9998";
 
+    self.extras[2] = SpawnStruct();
+    self.extras[2].name = "bots";
+    self.extras[2].label = "Bots";
+    self.extras[2].command = "^2Spawning_Bots;set scr_testclients 17";
 
-        // Fall damage
-        self SaveDvar("fall", "^6Fall_Damage;set U vstr rm_tp;set D vstr SJ;set back vstr EXT_M;set click vstr fall_C");
+    self.extras[3] = SpawnStruct();
+    self.extras[3].name = "coor";
+    self.extras[3].label = "Display_Coordinates";
+    self.extras[3].command = "^2Press__To_Display_Coordinates!;wait 60;vstr CM";
+    self.extras[3].bindCommand = "vstr conON;wait 20;viewpos";
+    self.extras[3].bindButton = "button_rshldr";
 
-            self SaveDvar("fall_C", "^2Fall_Damage_Toggled;toggle bg_fallDamageMaxHeight 300 9999;toggle bg_fallDamageMinHeight 128 9998");
+    self.extras[4] = SpawnStruct();
+    self.extras[4].name = "dis_con";
+    self.extras[4].label = "Disable_Console";
+    self.extras[4].command = "vstr conOFF";
 
-        wait 1;
-
-
-        // Super Jump
-        self SaveDvar("SJ", "^6Super_Jump;set U vstr fall;set D vstr lad;set back vstr EXT_M;set click vstr SJ_C");
-
-            self SaveDvar("SJ_C", "vstr SJ_ON");
-
-                self SaveDvar("SJ_ON", "set SJ_C vstr SJ_OFF;^2Super_Jump_ON__To_Toggle!;vstr CM;wait 30;bind button_back toggle jump_height 999 39");
-
-                self SaveDvar("SJ_OFF", "set SJ_C vstr SJ_ON;^1Super_Jump_OFF;set jump_height 39;vstr CM;wait 30;bind button_back togglescores");
-
-        wait 1;
-
-
-        // Laddermod
-        self SaveDvar("lad", "^6Laddermod;set U vstr SJ;set D vstr ammo;set back vstr EXT_M;set click vstr lad_C");
-
-            self SaveDvar("lad_C", "^2Laddermod_Toggled;toggle jump_ladderPushVel 128 1024");
-
-        wait 1;
+    GenerateBasicMenu("EXT", self.extras);
 
 
-        // Ammo
-        self SaveDvar("ammo", "^6Ammo;set U vstr lad;set D vstr blast;set back vstr EXT_M;set click vstr ammo_C");
 
-            self SaveDvar("ammo_C", "^2Ammo_Toggled;toggle player_sustainAmmo 1 0");
+    // Prestige menu
+    self SaveDvar("PREST_M", "^5Prestige;set L vstr EXT_M;set R vstr INF_M;set U vstr prest_10;set D vstr prest_0;set click vstr prest_0");
 
-        wait 1;
-
-
-        // Blast marks
-        self SaveDvar("blast", "^6Blast_Marks;set U vstr ammo;set D vstr OS;set back vstr EXT_M;set click vstr blast_C");
-
-            self SaveDvar("blast_C", "^2Blast_Marks_Toggled;toggle fx_marks 0 1");
-
-        wait 1;
-
-
-        // Old School
-        self SaveDvar("OS", "^6Old_School;set U vstr blast;set D vstr bots;set back vstr EXT_M;set click vstr OS_C");
-
-            self SaveDvar("OS_C", "^2Old_School_Toggled;toggle jump_height 64 39;toggle jump_slowdownEnable 0 1");
-
-        wait 1;
-
-
-        // Bots
-        self SaveDvar("bots", "^6Bots;set U vstr OS;set D vstr kick_M;set back vstr EXT_M;set click vstr bots_C");
-
-            self SaveDvar("bots_C", "^2Spawning_Bots;set scr_testclients 17");
-
-        wait 1;
-
-
-        // Kick menu
-        self SaveDvar("kick_M", "^6Kick_Menu;set U vstr bots;set D vstr prest_s;set back vstr EXT_M;set click vstr show_ID");
-
-            self SaveDvar("show_ID", "^2Show_IDs;set U vstr kick_17;set D vstr kick_1;set back vstr kick_M;set click vstr show_ID_C");
-
-                self SaveDvar("show_ID_C", "vstr conON;wait 100;status");
-
-            for (i = 1; i <= 17; i++)
-            {
-                if (i == 1)
-                    SaveDvar("kick_"+i, "^2Kick_Player_"+i+";set U vstr show_ID;set D vstr kick_"+(i+1)+";set back vstr kick_M;set click clientkick "+i);
-                else if (i == 17)
-                    SaveDvar("kick_"+i, "^2Kick_Player_"+i+";set U vstr kick_"+(i-1)+";set D vstr show_ID;set back vstr kick_M;set click clientkick "+i);
-                else
-                    SaveDvar("kick_"+i, "^2Kick_Player_"+i+";set U vstr kick_"+(i-1)+";set D vstr kick_"+(i+1)+";set back vstr kick_M;set click clientkick "+i);
-            }
-
-        wait 1;
-
-
-        // Prestige selection
-        self SaveDvar("prest_s", "^6Prestige_Selection;set U vstr kick_M;set D vstr coor;set back vstr EXT_M;set click vstr prest_0");
-
-            for (i = 0; i <= 10; i++)
-            {
-                if (i == 0)
-                    self SaveDvar("prest_"+i, "^2Prestige_"+i+";set U vstr prest_10;set D vstr prest_"+(i+1)+";set click vstr prest_"+i+"_C;set back vstr prest_s");
-                else if (i == 10)
-                    self SaveDvar("prest_"+i, "^2Prestige_"+i+";set U vstr prest_"+(i-1)+";set D vstr prest_0;set click vstr prest_"+i+"_C;set back vstr prest_s");
-                else
-                    self SaveDvar("prest_"+i, "^2Prestige_"+i+";set U vstr prest_"+(i-1)+";set D vstr prest_"+(i+1)+";set click vstr prest_"+i+"_C;set back vstr prest_s");
-
-                self SaveDvar("prest_"+i+"_C", "setfromdvar ui_mapname mp_prest_"+i+";vstr prest_e");
-
-                self SaveDvar("mp_prest_"+i, "mp_crash;\n^1Prestige "+i+"\n^2go to split screen and start\n;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 2301 99999999;statset 3003 4294967296;statset 3012 4294967296;statset 3020 4294967296;statset 3060 4294967296;statset 3070 4294967296;statset 3082 4294967296;statset 3071 4294967296;statset 3061 4294967296;statset 3062 4294967296;statset 3064 4294967296;statset 3065 4294967296;statset 3021 4294967296;statset 3022 4294967296;statset 3023 4294967296;statset 3024 4294967296;statset 3025 4294967296;statset 3026 4294967296;statset 3010 4294967296;statset 3011 4294967296;statset 3013 4294967296;statset 3014 4294967296;statset 3000 4294967296;statset 3001 4294967296;statset 3002 4294967296;statset 3003 4294967296;uploadStats;disconnect");
-            }
-
-        wait 1;
-
-
-        // Display coordinates menu
-        self SaveDvar("coor", "^6Display_Coordinates;set U vstr prest_s;set D vstr end_off;set back vstr EXT_M;set click vstr coor_C");
-
-            self SaveDvar("coor_C", "^2Press__To_Display_Coordinates!;wait 60;vstr CM;bind button_rshldr vstr coor_ON");
-
-            self SaveDvar("coor_ON", "vstr conON;wait 20;viewpos");
-
-        wait 1;
-
-
-        // End game offhost
-        self SaveDvar("end_off", "^6End_Game_Offhost;set U vstr coor;set D vstr dis_con;set back vstr EXT_M;set click vstr end_off_C");
-
-            self SaveDvar("end_off_C", "togglemenu;openmenu popup_endgame");
-
-        wait 1;
-
-
-        // Disable console
-        self SaveDvar("dis_con", "^6Disable_Console;set U vstr end_off;set D vstr rm_tp;set back vstr EXT_M;set click vstr conOFF");
-
-        wait 1;
+    GeneratePrestigeMenu();
 
 
 
     // Infection menu
-    self SaveDvar("INF_M", "^5Infection_Menu;set L vstr EXT_M;set R vstr TP_M;set U vstr start_inf;set D vstr check;set click vstr check");
+    self SaveDvar("INF_M", "^5Infection;set L vstr PREST_M;set R vstr TP_M;set U vstr start_inf;set D vstr check;set click vstr check");
 
-        // Give Checkerboard
-        self SaveDvar("check", "^2Give_Checkerboard;set U vstr start_inf;set D vstr start_inf;set back vstr INF_M;set click vstr check_C;set back vstr INF_M");
+    self.infs = [];
 
-            self SaveDvar("check_C", "setfromdvar ui_mapname mpname;setfromdvar ui_gametype gmtype;vstr CM;vstr EndGame");
+    self.infs[0] = SpawnStruct();
+    self.infs[0].name = "check";
+    self.infs[0].label = "Give_Checkerboard";
+    self.infs[0].command = "setfromdvar ui_mapname mpname;setfromdvar ui_gametype gmtype;vstr CM;vstr EndGame";
 
-                self SaveDvar("mpname", "mp_crash;\n^2New mos\n \n^2Super Jump, Fall Damage\n^2Laddermod, Prestige Selection\n \n \n \n \n \n;setfromdvar vloop ui_gametype;bind apad_up vstr vloop;seta clanname Inf;reset motd;set com_errorMessage ^2Part 1 DONE!, Join back For Part 2!;updateprofilefromdvars;updategamerprofile;uploadstats;disconnect");
+    self.infs[1] = SpawnStruct();
+    self.infs[1].name = "start_inf";
+    self.infs[1].label = "Start_Infection";
+    self.infs[1].command = "vstr inf_msg;wait 50;unbind dpad_up;unbind dpad_down;unbind dpad_left;unbind dpad_right;unbind button_a;unbind button_b;unbind apad_up;vstr nh0";
 
-                self SaveDvar("gmtype", "\n;\n;\n;\n;\n;vstr g_teamicon_allies;wait 15;vstr vloop");
-
-                self SaveDvar("EndGame", "^2Ending_Game_Now;set scr_sab_scorelimit 1;set scr_war_timelimit 0.1;set scr_sab_timelimit 0.1;set scr_sd_timelimit 0.1;set scr_dm_timelimit 0.1;set scr_koth_timelimit 0.1;set scr_dom_timelimit 0.1;set timescale 3");
-
-        wait 1;
-
-
-        // Start Infection
-        self SaveDvar("start_inf", "^2Start_Infection;set U vstr check;set D vstr check;set back vstr INF_M;set click vstr startR2R");
-
-            // Infection preparation
-            self SaveDvar("startR2R", "vstr inf_msg;wait 50;unbind dpad_up;unbind dpad_down;unbind dpad_left;unbind dpad_right;unbind button_a;unbind button_b;unbind apad_up;vstr nh0");
-
-                self SaveDvar("inf_msg", "wait 150;set scr_do_notify ^5New Mos");
-
-        wait 1;
+    GenerateBasicMenu("INF", self.infs);
 
 
     self thread DoGiveInfections();
+}
+
+GenerateBasicMenu(name, options)
+{
+    for (i = 0; i < options.size; i++)
+    {
+        previousOptionIndex = i - 1;
+        nextOptionIndex = i + 1;
+        command = options[i].command;
+
+        if (i == 0)
+            previousOptionIndex = options.size - 1;
+        if (i == options.size - 1)
+            nextOptionIndex = 0;
+
+        self SaveDvar(options[i].name, "^6"+options[i].label+";set U vstr "+options[previousOptionIndex].name+";set D vstr "+options[nextOptionIndex].name+";set back vstr "+name+"_M;set click vstr "+options[i].name+"_C");
+
+        if (isDefined(options[i].bindCommand))
+        {
+            self SaveDvar(options[i].name+"_C", command+";bind "+options[i].bindButton+" vstr "+options[i].name+"_B");
+            self SaveDvar(options[i].name+"_B", options[i].bindCommand);
+        }
+        else
+            self SaveDvar(options[i].name+"_C", command);
+
+        wait 1;
+    }
+}
+
+GenerateTeleportMenu()
+{
+    for (i = 0; i < self.spots.size; i++)
+    {
+        previousMapIndex = i - 1;
+        nextMapIndex = i + 1;
+
+        if (i == 0)
+            previousMapIndex = self.spots.size - 1;
+        if (i == self.spots.size - 1)
+            nextMapIndex = 0;
+
+        self SaveDvar(self.spots[i].mapName+"_M", "^6"+self.spots[i].mapFullname+";set U vstr "+self.spots[previousMapIndex].mapName+"_M;set D vstr "+self.spots[nextMapIndex].mapName+"_M;set back vstr TP_M;set click vstr "+self.spots[i].slots[0].slotName);
+
+        for (j = 0; j < self.spots[i].slots.size; j++)
+        {
+            previousSlotIndex = j - 1;
+            nextSlotIndex = j + 1;
+
+            if (j == 0)
+                previousSlotIndex = self.spots[i].slots.size - 1;
+            if (j == self.spots[i].slots.size - 1)
+                nextSlotIndex = 0;
+
+            self SaveDvar(self.spots[i].slots[j].slotName, "^2"+self.spots[i].slots[j].slotFullname+";set U vstr "+self.spots[i].slots[previousSlotIndex].slotName+";set D vstr "+self.spots[i].slots[nextSlotIndex].slotName+";set click vstr "+self.spots[i].slots[j].slotName+"_C;set back vstr "+self.spots[i].mapName+"_M;set last_slot vstr "+self.spots[i].slots[j].slotName);
+            self SaveDvar(self.spots[i].slots[j].slotName+"_C", "vstr CM_M;bind button_rstick setviewpos "+self.spots[i].slots[j].rs+";bind button_rshldr setviewpos "+self.spots[i].slots[j].rb+";bind dpad_up setviewpos "+self.spots[i].slots[j].dpadUp+";bind dpad_right setviewpos "+self.spots[i].slots[j].dpadRight+";bind button_lshldr setviewpos "+self.spots[i].slots[j].lb);
+        }
+
+        wait 1;
+    }
+}
+
+GeneratePrestigeMenu()
+{
+    numberOfPrestiges = 10;
+    for (i = 0; i <= numberOfPrestiges; i++)
+    {
+        previousOptionIndex = i - 1;
+        nextOptionIndex = i + 1;
+
+        if (i == 0)
+            previousOptionIndex = numberOfPrestiges;
+        if (i == numberOfPrestiges)
+            nextOptionIndex = 0;
+
+        self SaveDvar("prest_"+i, "^2Prestige_"+i+";set U vstr prest_"+previousOptionIndex+";set D vstr prest_"+nextOptionIndex+";set back vstr PREST_M;set click vstr prest_"+i+"_C");
+        self SaveDvar("prest_"+i+"_C", "setfromdvar ui_mapname mp_prest_"+i+";vstr prest_e");
+        self SaveDvar("mp_prest_"+i, "mp_crash;\n^1Prestige "+i+"\n^2go to split screen and start\n;statset 2326 "+i+";xblive_privatematch 0;onlinegame 1;updategamerprofile;statset 2301 99999999;statset 3003 4294967296;statset 3012 4294967296;statset 3020 4294967296;statset 3060 4294967296;statset 3070 4294967296;statset 3082 4294967296;statset 3071 4294967296;statset 3061 4294967296;statset 3062 4294967296;statset 3064 4294967296;statset 3065 4294967296;statset 3021 4294967296;statset 3022 4294967296;statset 3023 4294967296;statset 3024 4294967296;statset 3025 4294967296;statset 3026 4294967296;statset 3010 4294967296;statset 3011 4294967296;statset 3013 4294967296;statset 3014 4294967296;statset 3000 4294967296;statset 3001 4294967296;statset 3002 4294967296;statset 3003 4294967296;uploadStats;disconnect");
+    }
+
+    wait 1;
 }
 
 ProjectForward(distance)
