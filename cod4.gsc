@@ -223,8 +223,7 @@ DestroyHUD()
         self.tText destroy();
 
     if (isDefined(self.mText))
-        for (i = 0; i < self.mText.size; i++)
-            self.mText[i] destroy();
+        self.mText destroy();
 }
 
 DestroyHUDOnDeath()
@@ -320,25 +319,20 @@ RunMenu(menu)
     if (!isDefined(self.curs))
         self.curs = 0;
 
-    if (!isDefined(self.mText))
-        self.mText = [];
-
     self.Bckrnd = self CreateRectangle("", "", 0, 0, 320, 900, ((0/255),(0/255),(0/255)), 0.6, 1);
-    self.Scrllr = self CreateRectangle("CENTER", "TOP", 0, 40, 320, 22, ((255/255),(255/255),(255/255)), 0.6, 2);
+    self.Scrllr = self CreateRectangle("CENTER", "TOP", 0, 40, 320, 22, ((255/255),(0/255),(0/255)), 0.6, 2);
 
     self.tText = self CreateText("default", 2.4, "CENTER", "TOP", 0, 12, 3, 1, ((255/255),(0/255),(0/255)), self.menuAction[menu].title);
 
+    menuContent = "";
     for (i = 0; i < self.menuAction[menu].opt.size; i++)
-        self.mText[i] = self CreateText("default", 1.6, "CENTER", "TOP", 0, i * 18 + 40, 3, 1, ((255/255),(255/255),(255/255)), self.menuAction[menu].opt[i]);
+        menuContent += self.menuAction[menu].opt[i] + "\n";
+
+    self.mText = self CreateText("default", 1.6, "CENTER", "TOP", 0, 40, 3, 1, ((255/255),(255/255),(255/255)), menuContent);
 
     while (self.mOpen)
     {
-        for (i = 0; i < self.menuAction[menu].opt.size; i++)
-            if (i != self.curs)
-                self.mText[i].color = ((255/255),(255/255),(255/255));
-
-        self.mText[self.curs].color = ((0/255),(0/255),(0/255));
-        self.Scrllr Move("y", (self.curs * 18) + 40);
+        self.Scrllr Move("y", (self.curs * 19.2) + 40);
         self waittill("buttonPressed", button);
         switch (button)
         {
