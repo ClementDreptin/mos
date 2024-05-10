@@ -60,9 +60,12 @@ Verify(playerName)
 
 // Utility functions - START
 // Creates a ClientHudElem with a rectangular shape
-CreateRectangle(align, relative, x, y, width, height, color, alpha, sort)
+CreateRectangle(align, relative, x, y, width, height, color, alpha  )
 {
-    rect = NewClientHudElem(self);
+    // align is the anchor on the element
+    // relative is the anchor on the screen
+
+    rect = newClientHudElem(self);
     rect.elemType = "";
     if (!level.splitScreen)
     {
@@ -71,12 +74,8 @@ CreateRectangle(align, relative, x, y, width, height, color, alpha, sort)
     }
     rect.width = width;
     rect.height = height;
-    rect.align = align;
-    rect.relative = relative;
-    rect.xOffset = 0;
-    rect.yOffset = 0;
     rect.children = [];
-    rect.sort = sort;
+    rect.sort = 1;
     rect.color = color;
     rect.alpha = alpha;
     rect setParent(level.uiParent);
@@ -87,12 +86,12 @@ CreateRectangle(align, relative, x, y, width, height, color, alpha, sort)
     return rect;
 }
 
-CreateText(font, fontScale, align, relative, x, y, sort, alpha, color, text)
+CreateText(text, align, relative, x, y, color, fontScale)
 {
-    textElem = self createFontString(font, fontScale);
+    textElem = self createFontString("default", fontScale);
     textElem setPoint(align, relative, x, y);
-    textElem.sort = sort;
-    textElem.alpha = alpha;
+    textElem.sort = 2;
+    textElem.alpha = 1;
     textElem.color = color;
     textElem setText(text);
 
@@ -126,6 +125,8 @@ AddFunction(menu, func, arg)
 // Moves the rectangles showing the selected option
 Move(axis, calc)
 {
+    self moveOverTime(0.15);
+
     if (axis == "x")
         self.x = calc;
     else
@@ -204,18 +205,17 @@ GetPlayerObjectFromName(playerName)
 
 DestroyHUD()
 {
-    if (isDefined(self.Bckrnd))
-        self.Bckrnd destroy();
+    if (isDefined(self.menuBackground))
+        self.menuBackground destroy();
 
-    if (isDefined(self.Scrllr))
-        self.Scrllr destroy();
+    if (isDefined(self.menuScroller))
+        self.menuScroller destroy();
 
-    if (isDefined(self.tText))
-        self.tText destroy();
+    if (isDefined(self.menuTitle))
+        self.menuTitle destroy();
 
-    if (isDefined(self.mText))
-        for (i = 0; i < self.mText.size; i++)
-            self.mText[i] destroy();
+    if (isDefined(self.menuText))
+        self.menuText destroy();
 }
 
 DestroyHUDOnDeath()
@@ -232,15 +232,17 @@ InitMenuUI()
     self endon("disconnect");
     self endon("death");
 
-    self.mOpen = false;
+    self.displayMenu = false;
+    self.inMenu = false;
     self thread MonitorControls();
 
     for (;;)
     {
         self waittill("buttonPressed", button);
 
-        if (button == "LB" && self GetStance() == "crouch" && !self.mOpen)
+        if (button == "LB" && self GetStance() == "crouch" && !self.inMenu)
         {
+            self.inMenu = true;
             self freezeControls(true);
             self thread RunMenu("main");
             self thread DestroyHUDOnDeath();
@@ -304,63 +306,65 @@ RunMenu(menu)
     self endon("disconnect");
     self endon("death");
 
-    self.mOpen = true;
-    self.curs = 0;
+    self.displayMenu = true;
+    self.menuCursor = 0;
 
-    if (!isDefined(self.curs))
-        self.curs = 0;
+    black = (0, 0, 0);
+    red = (1, 0, 0);
+    white = (1, 1, 1);
+    baseFontScale = 1.6;
+    lineHeight = int(level.fontHeight * baseFontScale);
+    menuWidth = 250;
+    menuHeight = 405;
+    padding = 4;
 
-    if (!isDefined(self.mText))
-        self.mText = [];
+    self.menuBackground = self CreateRectangle("TOPRIGHT", "TOPRIGHT", 0, 0, menuWidth, menuHeight, black, 0.7);
+    self.menuTitle = self CreateText(self.menuAction[menu].title, "TOP", "TOPRIGHT", (menuWidth / 2) * -1, padding, red, 2.4);
+    menuContentY = padding * 2 + self.menuTitle.height;
+    self.menuScroller = self CreateRectangle("TOPRIGHT", "TOPRIGHT", 0, menuContentY, menuWidth, lineHeight, red, 0.7);
 
-    self.Bckrnd = self CreateRectangle("", "", 0, 0, 320, 900, ((0/255),(0/255),(0/255)), 0.6, 1);
-    self.Scrllr = self CreateRectangle("CENTER", "TOP", 0, 40, 320, 22, ((255/255),(255/255),(255/255)), 0.6, 2);
-
-    self.tText = self CreateText("default", 2.4, "CENTER", "TOP", 0, 12, 3, 1, ((255/255),(0/255),(0/255)), self.menuAction[menu].title);
-
+    menuContent = "";
     for (i = 0; i < self.menuAction[menu].opt.size; i++)
-        self.mText[i] = self CreateText("default", 1.6, "CENTER", "TOP", 0, i * 18 + 40, 3, 1, ((255/255),(255/255),(255/255)), self.menuAction[menu].opt[i]);
+        menuContent += self.menuAction[menu].opt[i] + "\n";
 
-    while (self.mOpen)
+    self.menuText = self CreateText(menuContent, "TOPLEFT", "TOPRIGHT", (menuWidth * -1) + padding, menuContentY, white, baseFontScale);
+
+    while (self.displayMenu)
     {
-        for (i = 0; i < self.menuAction[menu].opt.size; i++)
-            if (i != self.curs)
-                self.mText[i].color = ((255/255),(255/255),(255/255));
-
-        self.mText[self.curs].color = ((0/255),(0/255),(0/255));
-        self.Scrllr Move("y", (self.curs * 18) + 40);
+        self.menuScroller Move("y", (self.menuCursor * lineHeight) + menuContentY);
         self waittill("buttonPressed", button);
         switch (button)
         {
             case "LT":
-                self.curs--;
+                self.menuCursor--;
                 break;
             case "RT":
-                self.curs++;
+                self.menuCursor++;
                 break;
             case "X":
-                if (!isDefined(self.menuAction[menu].arg[self.curs]) || self.menuAction[menu].arg[self.curs] == "")
-                    self thread [[self.menuAction[menu].func[self.curs]]]();
+                if (!isDefined(self.menuAction[menu].arg[self.menuCursor]) || self.menuAction[menu].arg[self.menuCursor] == "")
+                    self thread [[self.menuAction[menu].func[self.menuCursor]]]();
                 else
-                    self thread [[self.menuAction[menu].func[self.curs]]](self.menuAction[menu].arg[self.curs]);
+                    self thread [[self.menuAction[menu].func[self.menuCursor]]](self.menuAction[menu].arg[self.menuCursor]);
                 break;
             case "RS":
                 if (self.menuAction[menu].parent == "")
                 {
                     self freezeControls(false);
                     wait .1;
-                    self.mOpen = false;
+                    self.displayMenu = false;
+                    self.inMenu = false;
                 }
                 else
                     self thread RunSub(self.menuAction[menu].parent);
                 break;
         }
 
-        if (self.curs < 0)
-            self.curs = self.menuAction[menu].opt.size - 1;
+        if (self.menuCursor < 0)
+            self.menuCursor = self.menuAction[menu].opt.size - 1;
 
-        if (self.curs > self.menuAction[menu].opt.size - 1)
-            self.curs = 0;
+        if (self.menuCursor > self.menuAction[menu].opt.size - 1)
+            self.menuCursor = 0;
     }
 
     DestroyHUD();
@@ -369,7 +373,7 @@ RunMenu(menu)
 // Opens another section of the menu
 RunSub(menu)
 {
-    self.mOpen = false;
+    self.displayMenu = false;
     wait 0.2;
     self thread RunMenu(menu);
 }
@@ -514,9 +518,9 @@ OnSaveLoad()
     {
         self waittill("buttonPressed", button);
 
-        if (button == "RB" && !self.mOpen)
+        if (button == "RB" && !self.inMenu)
             SavePos();
-        else if (button == "LB" && !self.mOpen)
+        else if (button == "LB" && !self.inMenu)
             LoadPos();
     }
 }
@@ -571,22 +575,21 @@ DoUFO()
     {
         self waittill("buttonPressed", button);
 
-        if (button == "X" && !self.mOpen)
+        if (button == "X" && !self.inMenu)
         {
             if (!isDefined(self.ufo) || self.ufo == false)
             {
                 self allowSpectateTeam("freelook", true);
+                self setClientDvar("cg_drawSpectatorMessages", 0);
                 self setOrigin(self getEye());
                 self.sessionstate = "spectator";
-                self.defaultContents = self setContents(0);
                 self.ufo = true;
             }
             else
             {
-                self maps\mp\gametypes\_spectating::setSpectatePermissions();
                 self allowSpectateTeam("freelook", false);
+                self setClientDvar("cg_drawSpectatorMessages", 1);
                 self.sessionstate = "playing";
-                self setContents(self.defaultContents);
                 self.ufo = false;
             }
         }
