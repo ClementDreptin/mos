@@ -242,14 +242,16 @@ InitMenuUI()
     self endon("death");
 
     self.displayMenu = false;
+    self.inMenu = false;
     self thread MonitorControls();
 
     for (;;)
     {
         self waittill("buttonPressed", button);
 
-        if (button == "LB" && self GetStance() == "crouch" && !self.displayMenu)
+        if (button == "LB" && self GetStance() == "crouch" && !self.inMenu)
         {
+            self.inMenu = true;
             self freezeControls(true);
             self thread RunMenu("main");
             self thread DestroyHUDOnDeath();
@@ -361,6 +363,7 @@ RunMenu(menu)
                     self freezeControls(false);
                     wait .1;
                     self.displayMenu = false;
+                    self.inMenu = false;
                 }
                 else
                     self thread RunSub(self.menuAction[menu].parent);
@@ -588,9 +591,9 @@ OnSaveLoad()
     {
         self waittill("buttonPressed", button);
 
-        if (button == "RB" && !self.displayMenu)
+        if (button == "RB" && !self.inMenu)
             SavePos();
-        else if (button == "LB" && !self.displayMenu)
+        else if (button == "LB" && !self.inMenu)
             LoadPos();
     }
 }
@@ -645,22 +648,21 @@ DoUFO()
     {
         self waittill("buttonPressed", button);
 
-        if (button == "X" && !self.displayMenu)
+        if (button == "X" && !self.inMenu)
         {
             if (!isDefined(self.ufo) || self.ufo == false)
             {
                 self allowSpectateTeam("freelook", true);
+                self setClientDvar("cg_drawSpectatorMessages", 0);
                 self setOrigin(self getEye());
                 self.sessionstate = "spectator";
-                self.defaultContents = self setContents(0);
                 self.ufo = true;
             }
             else
             {
-                self maps\mp\gametypes\_spectating::setSpectatePermissions();
                 self allowSpectateTeam("freelook", false);
+                self setClientDvar("cg_drawSpectatorMessages", 1);
                 self.sessionstate = "playing";
-                self setContents(self.defaultContents);
                 self.ufo = false;
             }
         }
