@@ -265,12 +265,13 @@ DefineMenuStructure()
     self AddFunction("main", ::RunSub, "admin");
 
     // Main Mods menu
-    self AddMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks;Old School", "main");
+    self AddMenu("main_mods", "Main Mods", "God Mode;Fall Damage;Ammo;Blast Marks;Old School;Move Bomb (SnD ONLY)", "main");
     self AddFunction("main_mods", ::ToggleGodMode, "");
     self AddFunction("main_mods", ::ToggleFallDamage, "");
     self AddFunction("main_mods", ::ToggleAmmo, "");
     self AddFunction("main_mods", ::ToggleBlastMarks, "");
     self AddFunction("main_mods", ::ToggleOldSchool, "");
+    self AddFunction("main_mods", ::MoveBomb, "");
 
     // Teleport menu
     self AddMenu("teleport", "Teleport", "Save/Load Binds;Save Position;Load Position;UFO;Send to Sky", "main");
@@ -477,6 +478,72 @@ ToggleOldSchool()
         setDvar("jump_slowdownEnable", "1");
         self iPrintLn("Old School ^1Off");
     }
+}
+
+InitBomb()
+{
+    entities = getEntArray();
+    bombBrushModels = [];
+
+    // Loop through all the entities
+    for (i = 0; i < entities.size; i++)
+    {
+        if (!isDefined(entities[i].script_gameobjectname))
+            continue;
+
+        // Look for the bomb zones
+        if (entities[i].script_gameobjectname == "bombzone")
+        {
+            // Save the first bomb script model
+            if (entities[i].classname == "script_model")
+                level.bomb = entities[i];
+
+            // Save all the bomb brush models
+            if (entities[i].classname == "script_brushmodel")
+                bombBrushModels[bombBrushModels.size] = entities[i];
+        }
+    }
+
+    // Make sure we found a bomb
+    if (!isDefined(level.bomb) || bombBrushModels.size == 0)
+    {
+        self iPrintLn("^1Couldn't find a bomb on this map!");
+        return;
+    }
+
+    // Find the corresponding bomb brush model for the bomb script model
+    for (i = 0; i < bombBrushModels.size; i++)
+    {
+        if (distance(level.bomb.origin, bombBrushModels[i].origin) < 50)
+        {
+            level.bombBrushModel = bombBrushModels[i];
+            break;
+        }
+    }
+    if (!isDefined(level.bombBrushModel))
+    {
+        self iPrintLn("^1Couldn't find a brush model for this bomb!");
+        return;
+    }
+
+    // Link to bomb brush model to the bomb script model
+    level.bombBrushModel linkTo(level.bomb);
+}
+
+MoveBomb()
+{
+    // Setup the bomb object the first time the bomb is moved
+    if (!isDefined(level.bomb))
+        self InitBomb();
+
+    // Move the bomb 150 units in front, and 15 below the player
+    // The bomb has to be placed a little lower because it's too high to jump on it
+    level.bomb.origin = self ProjectForward(150) - (0, 0, 15);
+
+    // Rotate the bomb according to where the player is currently looking
+    playerAngles = self getPlayerAngles();
+    bombAngles = (level.bomb.angles[0], playerAngles[1] + 90, level.bomb.angles[2]);
+    level.bomb rotateTo(bombAngles, 0.01);
 }
 
 FreezePosition(position, angles)
