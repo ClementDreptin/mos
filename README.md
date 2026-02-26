@@ -1,5 +1,8 @@
 # CoD Jumper Mod Menu with R2R infection (Mo's)
 
+> [!WARNING]  
+> This project has been deprecated. If you're looking for an alternative, check you [Hayzen](https://github.com/ClementDreptin/Hayzen).
+
 ## CoD4
 
 ### Requirements
